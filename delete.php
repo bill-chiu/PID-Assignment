@@ -3,7 +3,7 @@ session_start();
 $id=$_SESSION['id'];
 if ($id!=1){
 $sql = <<<multi
-    delete from bankuser where userId =$id
+    delete from shopuser where userId =$id
 multi;
 
 require("connDB.php");
