@@ -8,11 +8,11 @@
        }
 
        $sql = <<<multi
-       delete from itemlists where itemID =$id
+       delete from shoplists where shoplistID =$id
        multi;
        
        require("connDB.php");
        mysqli_query($link, $sql);
        
-       header("location:echo.php");
+       header("location:shop_car.php");
 ?>

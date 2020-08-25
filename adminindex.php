@@ -110,6 +110,7 @@ multi;
                     <td>
                         <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
                         <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["itemID"] ?>" />
+                        <a href="delete_item.php?id=<?= $row["itemID"] ?>" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </form>
         </tr>
