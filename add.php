@@ -8,10 +8,11 @@ if (isset($_POST["btnOK"])) {
     $identityID=$_POST["txtIdentityID"];
     $account = $_POST["txtUserAccount"];
     $password = $_POST["txtPassword"];
+    $black = 0;
 
     $sql = <<<multi
-    insert into shopuser (username,userphone,identityID,account,password)
-    values ('$username','$userphone','$identityID','$account','$password')
+    insert into shopuser (username,userphone,identityID,account,password,black)
+    values ('$username','$userphone','$identityID','$account','$password',$black)
     multi;
     echo $sql;
     require("connDB.php");
