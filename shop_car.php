@@ -3,20 +3,20 @@
 session_start();
 require("connDB.php");
 
-function seeitem()
-{
-}
+
+$id=$_SESSION['id'];
 // echo $id;
 if (isset($_POST["btnOK"])) {
-  $id = $_POST["btn444"];
-  echo $id;
+  $listid = $_POST["btn444"];
+  echo $listid;
 
   $quantity = $_POST["txtQuantity"];
 
   $sql = <<<multi
     UPDATE shoplists SET 
     quantity = '$quantity' 
-    WHERE shoplists .shoplistID =$id
+    WHERE shoplists .shoplistID =$listid
+
 multi;
 
   $result = mysqli_query($link, $sql);
@@ -26,8 +26,8 @@ multi;
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
-  where c.userId=1
-  order by o.itemID
+  where c.userId=$id
+  ORDER BY shoplistID ASC
   multi;
   $result = mysqli_query($link, $sql);
   // echo $id;
@@ -38,8 +38,8 @@ multi;
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
-  where c.userId=1
-  order by o.itemID
+  where c.userId=$id
+  ORDER BY shoplistID ASC
   multi;
   $result = mysqli_query($link, $sql);
 }
@@ -142,7 +142,7 @@ multi;
 
   <tr>
     <td align="left" bgcolor="#CCCCCC">
-      <a href="admin.php " class="btn btn-primary  btn-sm">上一頁</a>
+      <!-- <a href="admin.php " class="btn btn-primary  btn-sm">上一頁</a> -->
       <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
     </td>
     <td bgcolor="#CCCCCC"></td>
