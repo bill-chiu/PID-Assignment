@@ -10,7 +10,6 @@ function randowverif()
   $_SESSION['verification2 '] = rand(0, 9);
   $_SESSION['verification3 '] = rand(0, 9);
   $_SESSION['verification4 '] = rand(0, 9);
-
 }
 
 
@@ -47,7 +46,7 @@ if ($account != "" && $password != "") {
   // 執行SQL查詢
   $result = mysqli_query($link, $sql);
   $total_records = mysqli_num_rows($result);
-  
+
   // 是否有查詢到使用者記錄以及驗證碼是否正確
   if ($total_records > 0 && $_SESSION['verification '] == $verif) {
 
@@ -56,12 +55,15 @@ if ($account != "" && $password != "") {
     // 成功登入, 指定Session變數
     $_SESSION['user'] =  $row["username"];
     $_SESSION['id'] =  $row["userId"];
-    $_SESSION['moneynow']=$row["money"];
+    $_SESSION['moneynow'] = $row["money"];
     $_SESSION["login_session"] = true;
-
-    header("Location: index.php");
+    if ($_SESSION['id'] != 1) {
+      header("Location: index.php");
+    } else {
+      header("Location: admin.php");
+    }
     // 登入失敗
-  } else {  
+  } else {
     randowverif();
     //如果沒有這個帳密
     if (!$total_records > 0) {
@@ -78,7 +80,7 @@ if ($account != "" && $password != "") {
     $_SESSION["login_session"] = false;
   }
   // 關閉資料庫連接  
-  mysqli_close($link);  
+  mysqli_close($link);
   //如果有空白
 } else {
   randowverif();
@@ -95,6 +97,10 @@ if ($account != "" && $password != "") {
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Lab - Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -108,7 +114,7 @@ if ($account != "" && $password != "") {
         </td>
       </tr>
       <tr>
-        <td width="100" align="center" valign="baseline">使用者帳號</td>
+        <td width="150" align="center" valign="baseline">使用者帳號</td>
         <td valign="baseline"><input type="text" name="txtUserAccount" id="txtUserAccount" /></td>
       </tr>
       <tr>
@@ -124,14 +130,16 @@ if ($account != "" && $password != "") {
             <img src="<?php echo "images/" . $_SESSION['verification4 '] . '.png' ?>" /></p>
         </td>
 
-        <td><input type="text" name="Verif"  />
+        <td><input type="text" name="Verif" />
         </td>
 
       </tr>
       <tr>
-        <td colspan="2" align="center" bgcolor="#CCCCCC"><input type="submit" name="btnOK" id="btnOK" value="登入" />
-          <input type="reset" name="btnReset" id="btnReset" value="重設" />
-          <input type="submit" name="btnLogin" id="btnLogin" value="註冊" />
+        <td colspan="2" align="center" bgcolor="#CCCCCC">
+          <input type="submit" name="btnOK" id="btnOK" value="登入" class="btn btn-success btn-sm"/>
+          
+          <input type="reset" name="btnReset" id="btnReset" value="重設" class="btn btn-success btn-sm"/>
+          <input type="submit" name="btnLogin" id="btnLogin" value="註冊" class="btn btn-success btn-sm" />
         </td>
       </tr>
 

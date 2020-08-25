@@ -30,63 +30,35 @@ $row = mysqli_fetch_assoc($result);
 <body>
 
   <table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-    <tr>
+    <tr bgcolor="#CCCCCC">
 
-      <td align="left" bgcolor="#CCCCCC">
+      <td align="left" >
         <font color="#FFFFFF">購物車系統 － 管理</font>
-      <td bgcolor="#CCCCCC"></td>
-      <td bgcolor="#CCCCCC"></td>
-      <td bgcolor="#CCCCCC"></td>
-      <td align="left" bgcolor="#CCCCCC" valign="baseline">
+        
+        <td align="right"><a>您好<?= $_SESSION["user"] ?> </a>
+        <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
+      </td>
 
-        <?php if ($_SESSION["login_session"] == false) { ?>
-    <tr>
-
-      <?php if ($_SESSION["id"] == "1") { ?>
-
-        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-
-          <td><?= $row["username"] ?></td>
-          <td><?= $row["phone"] ?></td>
-          <td><?= $row["account"] ?></td>
-          <td><?= $row["password"] ?></td>
-
-
-
-          <a href="edit.php?id=<?= $row["studentsId"] ?>" class="btn btn-success btn-sm">Edit</a>
-          <a href="admindelete.php?id=<?= $row["studentsId"] ?>" class="btn btn-danger btn-sm">Delete</a>
-          </td>
-    </tr>
-  <?php  } ?>
-<?php }  ?>
-<a>This page for user only.</a>
-</td>
-</tr>
-
-
-<?php } else { ?>
-  <a>您好<?= $_SESSION["user"] ?> </a><br>
-
+</table>
+<table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+  
   <tr>
-
-
-    <td>
+ <td>
       <?php if ($_SESSION["id"] == "1") { ?>
         <a href="shop_account.php?id=<?= $row["userId"] ?>" class="btn btn-success btn-sm">修改會員資料</a>
 
-        <a href="item" .php?id=<?= $row["userId"] ?>" class="btn btn-success btn-sm">商品清單</a>
+        <a href="adminindex.php" class="btn btn-success btn-sm">商品清單</a>
+        <a href="add_item.php" class="btn btn-success btn-sm">新增商品</a>
       <?php }  ?>
-      <a href="shop_car.php?id=<?= $row["userId"] ?>" class="btn btn-success btn-sm">購物車清單</a>
       <a href="edit.php?id=<?= $row["userId"] ?>" class="btn btn-success btn-sm">修改帳戶資料</a>
 
     </td>
   </tr>
-<?php } ?>
+
 
 <tr>
   <td align="left" bgcolor="#CCCCCC">
-
-    <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
+  <font color="#CCCCCC"> <a>回管理資料目錄</a></font>
   </td>
   <td bgcolor="#CCCCCC"></td>
   <td bgcolor="#CCCCCC"></td>
