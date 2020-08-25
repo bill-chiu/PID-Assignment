@@ -3,14 +3,49 @@
 session_start();
 require("connDB.php");
 
-$id = $_SESSION['id'];
+function seeitem()
+{
+}
+// echo $id;
+if (isset($_POST["btnOK"])) {
+  $id = $_POST["btn444"];
+  echo $id;
 
-$sql = <<<multi
-select * from shopuser
+  $quantity = $_POST["txtQuantity"];
+
+  $sql = <<<multi
+    UPDATE shoplists SET 
+    quantity = '$quantity' 
+    WHERE shoplists .shoplistID =$id
 multi;
-$result = mysqli_query($link, $sql);
+
+  $result = mysqli_query($link, $sql);
+
+  $sql = <<<multi
+  select c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
+  
+  from shopuser c join shoplists o on o.userId =c.userId
+                   join itemlists od on od.itemID =o.itemID
+  where c.userId=1
+  order by o.itemID
+  multi;
+  $result = mysqli_query($link, $sql);
+  // echo $id;
+} else {
+
+  $sql = <<<multi
+  select c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
+  
+  from shopuser c join shoplists o on o.userId =c.userId
+                   join itemlists od on od.itemID =o.itemID
+  where c.userId=1
+  order by o.itemID
+  multi;
+  $result = mysqli_query($link, $sql);
+}
 
 ?>
+
 
 
 
@@ -28,11 +63,13 @@ $result = mysqli_query($link, $sql);
 
 <body>
 
-  <table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+  <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
     <tr>
 
       <td align="left" bgcolor="#CCCCCC">
         <font color="#FFFFFF">會員系統 － 管理員專用</font>
+      <td bgcolor="#CCCCCC"></td>
+      <td bgcolor="#CCCCCC"></td>
       <td bgcolor="#CCCCCC"></td>
       <td bgcolor="#CCCCCC"></td>
       <td bgcolor="#CCCCCC"></td>
@@ -49,41 +86,52 @@ $result = mysqli_query($link, $sql);
           <a href="login.php">This page for user only.</a>
 
         <?php } else { ?>
-          <?php if ($_SESSION["id"] != "1") { ?>
-            <a href="index.php">This page for admin only.</a>
-          <?php } else { ?>
 
-            <a>hello <?= $_SESSION["user"] ?> </a>
-          <?php } ?>
+          <a>hello <?= $_SESSION["user"] ?> </a>
         <?php } ?>
+
     </tr>
 
     <tr>
-      <td>用戶名稱</td>
-      <td>用戶手機</td>
-      <td>用戶帳號</td>
-      <td>用戶密碼</td>
+      <td>項目名稱</td>
+      <td>價格</td>
+      <td>總累</td>
+      <td>數量</td>
+      <td>總價</td>
     </tr>
 
 
     <tr>
-      <?php if ($_SESSION["id"] == "1") { ?>
-
-        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-
-          <td><?= $row["username"] ?></td>
-          <td><?= $row["userphone"] ?></td>
-          <td><?= $row["account"] ?></td>
-          <td><?= $row["password"] ?></td>
 
 
-          <td>
-            <a href="edit.php?id=<?= $row["studentsId"] ?>" class="btn btn-success btn-sm">Edit</a>
-            <a href="admindelete.php?id=<?= $row["studentsId"] ?>" class="btn btn-danger btn-sm">Delete</a>
-          </td>
+      <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+
+        <!-- <td><?= $row["shoplistID"] ?></td> -->
+        <td><?= $row["itemname"] ?></td>
+        <td><?= $row["itemprice"] ?></td>
+        <td><?= $row["species"] ?></td>
+
+
+        <td valign="baseline" width="0">
+
+          <form id="form1" name="form1" method="post">
+            <input type="text" name="txtQuantity" id="txtQuantity" value="<?php echo $row["quantity"]; ?>" />
+
+        </td>
+
+        <td><?= $row["totalprice"] ?></td>
+
+
+        <td>
+
+          <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
+          <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["shoplistID"] ?>" />
+          <a href="delete_item.php?id=<?= $row["shoplistID"] ?>" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+        </form>
     </tr>
+
   <?php  } ?>
-<?php }  ?>
 
 
 
@@ -91,14 +139,19 @@ $result = mysqli_query($link, $sql);
 
 
 
-<tr>
-  <td align="left" bgcolor="#CCCCCC"><a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
-  </td>
-  <td bgcolor="#CCCCCC"></td>
-  <td bgcolor="#CCCCCC"></td>
-  <td bgcolor="#CCCCCC"></td>
-  <td bgcolor="#CCCCCC"></td>
-</tr>
+
+  <tr>
+    <td align="left" bgcolor="#CCCCCC">
+      <a href="admin.php " class="btn btn-primary  btn-sm">上一頁</a>
+      <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
+    </td>
+    <td bgcolor="#CCCCCC"></td>
+    <td bgcolor="#CCCCCC"></td>
+    <td bgcolor="#CCCCCC"></td>
+    <td bgcolor="#CCCCCC"></td>
+    <td bgcolor="#CCCCCC"></td>
+    <td bgcolor="#CCCCCC"></td>
+  </tr>
   </table>
 
 

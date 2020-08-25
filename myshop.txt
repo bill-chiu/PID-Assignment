@@ -21,5 +21,34 @@ INSERT INTO shopuser (username, userphone,identityID,account, password) VALUES
 ('張會妹', '0945215635','Q125478963',  'chiang', '1234'),
 ('張無忌', '0984513021','P223654121', 'chiang1234', '1234');
 
+CREATE TABLE shoplists (
+  shoplistID int AUTO_INCREMENT not null primary key,
+  itemID int NOT NULL,
+  quantity int NOT NULL,
+  userId int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO shoplists (itemID, quantity,userId) VALUES
+('1', '2','1'),
+('2', '1','5'),
+('1', '3','3'),
+('5', '1','2'),
+('4', '1','1'),
+('3', '3','4'),
+('6', '4','5');
+
+CREATE TABLE itemlists (
+  itemID int AUTO_INCREMENT not null primary key,
+  itemname varchar(12) NOT NULL,
+  itemprice int NOT NULL,
+  species set('eat', 'book', 'toy','wear')
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO itemlists (itemname, itemprice,species) VALUES
+('羊肉爐', '200','eat'),
+('羊皮大衣', '800','wear'),
+('變形金剛', '300','toy'),
+('烤肉醬', '150','eat'),
+('哈利波特', '1400','book'),
+('牛仔褲', '700','wear');
 
