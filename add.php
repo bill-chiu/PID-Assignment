@@ -1,59 +1,3 @@
-<?php
-
-if (isset($_POST["btnOK"])) {
-  //如果都有輸入 把輸入的值post給變數
-  if ($_POST["txtUserName"] != "" && $_POST["txtUserPhone"] != "" && $_POST["txtIdentityID"] != "" && $_POST["txtUserAccount"] != "" && $_POST["txtPassword"] != "") {
-    $username = $_POST["txtUserName"];
-    $userphone = $_POST["txtUserPhone"];
-    $identityID = $_POST["txtIdentityID"];
-    $account = $_POST["txtUserAccount"];
-    $password = $_POST["txtPassword"];
-    $black = 0;
-
-    $sql = "SELECT * FROM shopuser WHERE `account`='$account'";
-
-    // 執行SQL查詢
-    require("connDB.php");
-    $result = mysqli_query($link, $sql);
-    $total_records = mysqli_num_rows($result);
-
-
-    // 是否有查詢到有相同帳號
-    if ($total_records > 0) {
-
-      echo "<center><font color='red'>";
-      echo "此帳戶已被註冊!<br/>";
-      echo "</font>";
-      //把值新增到顧客名單
-    } else {
-
-      $sql = <<<multi
-    insert into shopuser (username,userphone,identityID,account,password,black)
-    values ('$username','$userphone','$identityID','$account','$password',$black)
-    multi;
-      echo $sql;
-      require("connDB.php");
-      mysqli_query($link, $sql);
-
-      header("location:index.php");
-    }
-  }
-  //如果有沒輸入的
-  else {
-    echo "<center><font color='red'>";
-    echo "有欄位未輸入!<br/>";
-    echo "</font>";
-  }
-}
-//如果按下回首頁
-if (isset($_POST["btnHome"])) {
-
-  header("Location: index.php");
-  exit();
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,8 +21,8 @@ if (isset($_POST["btnHome"])) {
 </head>
 
 <body>
-  <form id="form1" name="form1" method="post">
-    <table width="300" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+  <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="add_account.php">
+    <table width="450" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
       <tr>
         <td colspan="2" align="center" bgcolor="#CCCCCC">
@@ -94,6 +38,12 @@ if (isset($_POST["btnHome"])) {
         <td valign="baseline"><input type="text" name="txtIdentityID" id="txtIdentityID" /></td>
       </tr>
       <tr>
+        <td>
+          <p>大頭照</p>
+          <p>(1*1)</p>
+        </td>
+        <td><input type="file" name="myfile" id="myfile" /></td>
+        </td>
       <tr>
         <td width="100" align="center" valign="baseline">使用者電話</td>
         <td valign="baseline"><input type="text" name="txtUserPhone" id="txtUserPhone" /></td>
@@ -111,13 +61,14 @@ if (isset($_POST["btnHome"])) {
       <tr>
         <td colspan="2" align="center" bgcolor="#CCCCCC">
           <input type="submit" name="btnOK" id="btnOK" value="新增" class="btn btn-success btn-sm" />
+          </form>
           <input type="reset" name="btnReset" id="btnReset" value="重設" class="btn btn-success btn-sm" />
           <input type="submit" name="btnHome" id="btnHome" value="回首頁" class="btn btn-success btn-sm" />
         </td>
       </tr>
 
     </table>
-  </form>
+
 </body>
 
 

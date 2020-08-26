@@ -57,7 +57,7 @@ if ($account != "" && $password != "") {
     // 成功登入, 指定Session變數
     $_SESSION['user'] =  $row["username"];
     $_SESSION['id'] =  $row["userId"];
-    $_SESSION['moneynow'] = $row["money"];
+    $_SESSION['account']=$row["account"];
     $_SESSION["login_session"] = true;
   
 

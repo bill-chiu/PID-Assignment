@@ -5,7 +5,6 @@ require("connDB.php");
 
 //$id等於登入帳號id
 $id = $_SESSION['id'];
-
 //如果是管理員 導向管理頁面
 if ($_SESSION['id'] == 1) {
   header("location:admin.php");
@@ -27,7 +26,7 @@ if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] != "0") {
 multi;
 
   $result = mysqli_query($link, $sql);
-  header("location:index.php");
+  header("Location:shop_car.php?id=$id");
   exit();
   //返回瀏覽介面
 } else {
@@ -76,6 +75,7 @@ multi;
 
       <?php } else { ?>
         <a>hello <?= $_SESSION["user"] ?> </a>
+        <a ><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
         <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-primary   btn-sm">購物車</a>
         <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
         <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-success  btn-sm">修改帳號</a>
@@ -113,7 +113,8 @@ multi;
 
 
         <form id="form1" name="form1" method="post">
-          <td><?= $row["itemname"] ?></td>
+          <td><?= $row["itemname"] ?>  <a ><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
+          
           <?php if ($_SESSION["login_session"] != false) { ?>
             <td><?= $row["itemprice"] ?></td>
           <?php } else { ?>

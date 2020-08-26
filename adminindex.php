@@ -102,7 +102,7 @@ multi;
 
 
                 <form id="form1" name="form1" method="post">
-                    <td><?= $row["itemname"] ?></td>
+                    <td><?= $row["itemname"] ?><a ><img src="item_image/<?=$row["itemname"] ?>.png" width="100" height="100"></a></td>
 
 
                     <td> <input type="text" name="txtprice" id="txtprice" value="<?= $row["itemprice"] ?>" /></td>
