@@ -1,12 +1,9 @@
 <?php
-    if(!isset($_GET["id"])){
-        die("id not found."); 
-       }
-       $id=$_GET["id"];
-       if(!is_numeric($id)){
-           die("id is not a number");
-       }
 
+        //$id等於物品id
+       $id=$_GET["id"];
+
+        //從物品清單中刪除該物品
        $sql = <<<multi
        delete from itemlists where itemID =$id
        multi;

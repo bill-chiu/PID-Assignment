@@ -47,21 +47,27 @@ if ($account != "" && $password != "") {
   $result = mysqli_query($link, $sql);
   $total_records = mysqli_num_rows($result);
 
-  // 是否有查詢到使用者記錄以及驗證碼是否正確
-  if ($total_records > 0 && $_SESSION['verification '] == $verif) {
 
-    $row = mysqli_fetch_assoc($result);
+ // 是否有查詢到使用者記錄以及驗證碼是否正確
+ if ($total_records > 0 && $_SESSION['verification '] == $verif) {
+  $row = mysqli_fetch_assoc($result);
+  if ($row["black"] != 1) {
+
+
     // && $_SESSION['verification '] == $verif
     // 成功登入, 指定Session變數
     $_SESSION['user'] =  $row["username"];
     $_SESSION['id'] =  $row["userId"];
     $_SESSION['moneynow'] = $row["money"];
     $_SESSION["login_session"] = true;
-    if ($_SESSION['id'] != 1) {
-      header("Location: index.php");
-    } else {
-      header("Location: admin.php");
-    }
+
+    header("Location: index.php");
+  } else {
+    randowverif();
+    echo "<center><font color='red'>";
+    echo "帳號已被黑名單!<br/>";
+    echo "</font>";
+  }
     // 登入失敗
   } else {
     randowverif();

@@ -11,7 +11,9 @@ session_start();
 
 // 檢查Session變數是否存在, 表示是否已成功登入
 $_SESSION["login_session"] = false;
+//id設回－１
 $_SESSION["id"]="-1";
+//變回遊客
 $_SESSION['user']="Guest";
 //回index.php
 header("location:index.php");  

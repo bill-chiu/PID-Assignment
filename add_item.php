@@ -1,13 +1,15 @@
 <?php
 
+//如果按下確認
 if (isset($_POST["btnOK"])) {
   
+  //如果都有輸入 把輸入的值post給變數
     if($_POST["txtItemName"]!=""&&$_POST["txtItemPrice"]!=""&&$_POST["txtSpecies"]!=""){
     $itemname=$_POST["txtItemName"];
     $itemprice=$_POST["txtItemPrice"];
     $species=$_POST["txtSpecies"];
 
-
+    //把值新增到物品清單
     $sql = <<<multi
     INSERT INTO itemlists (itemname, itemprice,species) VALUES
     ('$itemname', '$itemprice','$species')
@@ -16,13 +18,14 @@ if (isset($_POST["btnOK"])) {
     require("connDB.php");
     mysqli_query($link, $sql);
     header("location:echo.php");
+    //如果有未輸入
 }else{
     echo "<center><font color='red'>";
     echo "有欄位未輸入!<br/>";
     echo "</font>";
 }
 }
-
+//如果按下回首頁
 if (isset($_POST["btnHome"])) {
 
     header("Location: index.php");

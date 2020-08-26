@@ -4,7 +4,7 @@ session_start();
 require("connDB.php");
 
 $id = $_SESSION['id'];
-
+//顯示會員
 $sql = <<<multi
 select * from shopuser where userId =$id
 multi;

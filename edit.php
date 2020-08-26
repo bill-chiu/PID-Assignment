@@ -4,7 +4,7 @@
 
 
 session_start();
-
+//如果是遊客
 if ($_SESSION["user"] == "Guest") {
   header("location:admin.php");
   exit();
@@ -20,7 +20,6 @@ if (isset($_POST["btnDelete"])) {
   exit();
 }
 
-
 if (!isset($_GET["id"])) {
   die("id not found.");
 }
@@ -29,14 +28,38 @@ if (!is_numeric($id)) {
   die("id is not a number");
 }
 require("connDB.php");
+
+//如果都有輸入 把輸入的值post給變數
 if (isset($_POST["btnOK"]) && $_POST["txtUserPhone"] != "" && $_POST["txtUserAccount"] != "" && $_POST["txtPassword"] != "") {
   $username = $_POST["txtUserName"];
   $userphone = $_POST["txtUserPhone"];
   $account = $_POST["txtUserAccount"];
   $password = $_POST["txtPassword"];
-  // $identityID = $_POST["txtIdentityID"];
 
-  $sql = <<<multi
+  //查詢帳號資料
+  $sql = "SELECT * FROM shopuser WHERE `account`='$account'";
+
+  // 執行SQL查詢
+  require("connDB.php");
+  $result = mysqli_query($link, $sql);
+  $total_records = mysqli_num_rows($result);
+
+
+  // 是否有查詢到有相同帳號
+  if ($total_records > 0) {
+
+    echo "<center><font color='red'>";
+    echo "此帳戶已被註冊!<br/>";
+    echo "</font>";
+
+    $sql = "select * from shopuser where userId =$id";
+
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    //如果沒有相同帳號則修改內容
+  } else {
+    $sql = <<<multi
     update shopuser set 
     username='$username',
     userphone='$userphone',
@@ -44,16 +67,16 @@ if (isset($_POST["btnOK"]) && $_POST["txtUserPhone"] != "" && $_POST["txtUserAcc
     password='$password'
     where shopuser .userId=$id
 multi;
-  $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $sql);
     $_SESSION['user'] = $username;
 
-  header("location:index.php");
-  exit();
+    header("location:index.php");
+    exit();
+  }
+  //把數值放進空格裡面 方便檢視
 } else {
 
-  $sql = <<<multi
-    select * from shopuser where userId =$id
-multi;
+  $sql = "select * from shopuser where userId =$id";
   $result = mysqli_query($link, $sql);
   $row = mysqli_fetch_assoc($result);
 }
@@ -116,10 +139,10 @@ multi;
 
       <tr>
         <td colspan="2" align="center" bgcolor="#CCCCCC">
-          <input type="submit" name="btnOK" id="btnOK" value="修改"class="btn btn-success btn-sm" />
-          <input type="reset" name="btnReset" id="btnReset" value="重設" class="btn btn-success btn-sm"/>
-          <input type="submit" name="btnHome" id="btnHome" value="回首頁" class="btn btn-success btn-sm"/>
-          <input type="submit" name="btnDelete" id="btnDelete" value="刪除帳號" class="btn btn-danger btn-sm"/>
+          <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
+          <input type="reset" name="btnReset" id="btnReset" value="重設" class="btn btn-success btn-sm" />
+          <input type="submit" name="btnHome" id="btnHome" value="回首頁" class="btn btn-success btn-sm" />
+          <input type="submit" name="btnDelete" id="btnDelete" value="刪除帳號" class="btn btn-danger btn-sm" />
         </td>
       </tr>
 

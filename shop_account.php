@@ -5,6 +5,7 @@ require("connDB.php");
 
 $id = $_SESSION['id'];
 
+//顯示會員清單
 $sql = <<<multi
 select * from shopuser
 multi;

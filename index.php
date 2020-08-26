@@ -3,29 +3,33 @@
 session_start();
 require("connDB.php");
 
-
+//$id等於登入帳號id
 $id = $_SESSION['id'];
-if($_SESSION['id']==1){
+
+//如果是管理員 導向管理頁面
+if ($_SESSION['id'] == 1) {
   header("location:admin.php");
 }
 
 
+//如果按下按鈕且不為0
+if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] != "0") {
 
-if (isset($_POST["btnOK"])&&$_POST["txtQuantity"] != "0") {
-    $itemid = $_POST["btn444"];
-    echo $itemid;
-
-    $quantity = $_POST["txtQuantity"];
-    $sql = <<<multi
+  //記錄欲購買數量
+  $itemid = $_POST["btn444"];
+  echo $itemid;
+  //加入到購物車
+  $quantity = $_POST["txtQuantity"];
+  $sql = <<<multi
   INSERT INTO shoplists (itemID, quantity,userId) VALUES
   ('$itemid', '$quantity','$id')
 
 multi;
 
-    $result = mysqli_query($link, $sql);
-    header("location:echo.php");
-    exit();
-
+  $result = mysqli_query($link, $sql);
+  header("location:echo.php");
+  exit();
+  //返回瀏覽介面
 } else {
 
   $sql = <<<multi

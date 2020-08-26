@@ -5,13 +5,17 @@ require("connDB.php");
 
 
 $id=$_SESSION['id'];
-// echo $id;
-if (isset($_POST["btnOK"])) {
-  $listid = $_POST["btn444"];
-  echo $listid;
 
+//如果按下確認
+if (isset($_POST["btnOK"])) {
+
+  //記錄欲修改之物品編號
+  $listid = $_POST["btn444"];
+
+  //記錄欲修改之數量
   $quantity = $_POST["txtQuantity"];
 
+  //更新數量
   $sql = <<<multi
     UPDATE shoplists SET 
     quantity = '$quantity' 
@@ -21,6 +25,7 @@ multi;
 
   $result = mysqli_query($link, $sql);
 
+  //顯示購物車內容
   $sql = <<<multi
   select c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
   
@@ -30,9 +35,10 @@ multi;
   ORDER BY shoplistID ASC
   multi;
   $result = mysqli_query($link, $sql);
-  // echo $id;
+
 } else {
 
+  //顯示購物車內容
   $sql = <<<multi
   select c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
   
