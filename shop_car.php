@@ -76,15 +76,12 @@ multi;
 
       <td align="left" bgcolor="#CCCCCC">
         <font color="#FFFFFF">會員系統 － 管理員專用</font>
-      <td bgcolor="#CCCCCC"></td>
-      <td bgcolor="#CCCCCC"></td>
-      <td bgcolor="#CCCCCC"></td>
-      <td bgcolor="#CCCCCC"></td>
-      <td bgcolor="#CCCCCC"></td>
-      <td bgcolor="#CCCCCC"></td>
+
       </td>
 
     </tr>
+    </table>
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
     <tr>
 
       <td align="left" valign="baseline">
@@ -155,21 +152,16 @@ multi;
 
 
 
-
-
+  </table>
+  <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
 
   <tr>
     <td align="left" bgcolor="#CCCCCC">
-      <!-- <a href="admin.php " class="btn btn-primary  btn-sm">上一頁</a> -->
+    <a href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
       <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
     </td>
-    <td bgcolor="#CCCCCC"></td>
-    <td bgcolor="#CCCCCC"></td>
-    <td bgcolor="#CCCCCC"></td>
-    <td bgcolor="#CCCCCC"></td>
-    <td bgcolor="#CCCCCC"></td>
-    <td bgcolor="#CCCCCC"></td>
+
   </tr>
   </table>
 
