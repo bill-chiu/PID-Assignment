@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_POST["btnOK"])) {
-//如果都有輸入 把輸入的值post給變數
+  //如果都有輸入 把輸入的值post給變數
   if ($_POST["txtUserName"] != "" && $_POST["txtUserPhone"] != "" && $_POST["txtIdentityID"] != "" && $_POST["txtUserAccount"] != "" && $_POST["txtPassword"] != "") {
     $username = $_POST["txtUserName"];
     $userphone = $_POST["txtUserPhone"];
@@ -24,7 +24,7 @@ if (isset($_POST["btnOK"])) {
       echo "<center><font color='red'>";
       echo "此帳戶已被註冊!<br/>";
       echo "</font>";
-
+      //把值新增到顧客名單
     } else {
 
       $sql = <<<multi
@@ -37,7 +37,7 @@ if (isset($_POST["btnOK"])) {
 
       header("location:index.php");
     }
-  } 
+  }
   //如果有沒輸入的
   else {
     echo "<center><font color='red'>";
@@ -45,7 +45,7 @@ if (isset($_POST["btnOK"])) {
     echo "</font>";
   }
 }
-
+//如果按下回首頁
 if (isset($_POST["btnHome"])) {
 
   header("Location: index.php");
