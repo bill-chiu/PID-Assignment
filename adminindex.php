@@ -10,8 +10,9 @@ if (isset($_POST["btnOK"])) {
 
 
     $itemprice = $_POST["txtprice"];
+    //抓到物品編號
     $itemid = $_POST["btn444"];
-
+    //修改物品價格
     $sql = <<<multi
   UPDATE `itemlists` 
   SET `itemprice` = '$itemprice' 
@@ -20,10 +21,10 @@ if (isset($_POST["btnOK"])) {
 multi;
 
     $result = mysqli_query($link, $sql);
-    header("location:echo.php");
+    header("location:adminindex.php");
     exit();
 } else {
-
+    //顯示物品清單
     $sql = <<<multi
   select * from itemlists 
   multi;

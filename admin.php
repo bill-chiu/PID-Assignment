@@ -45,7 +45,7 @@ $row = mysqli_fetch_assoc($result);
   <tr>
  <td>
       <?php if ($_SESSION["id"] == "1") { ?>
-        <a href="shop_account.php?id=<?= $row["userId"] ?>" class="btn btn-success btn-sm">修改會員資料</a>
+        <a href="shop_account.php?id=<?= $row["userId"] ?>" class="btn btn-success btn-sm">查看會員資料</a>
 
         <a href="adminindex.php" class="btn btn-success btn-sm">商品清單</a>
         <a href="add_item.php" class="btn btn-success btn-sm">新增商品</a>

@@ -11,5 +11,5 @@
        require("connDB.php");
        mysqli_query($link, $sql);
        
-       header("location:echo.php");
+       header("location:adminindex.php");
 ?>

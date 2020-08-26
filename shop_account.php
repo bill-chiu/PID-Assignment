@@ -44,26 +44,16 @@ $result = mysqli_query($link, $sql);
     <tr>
 
       <td align="left" valign="baseline">
+        <a>hello <?= $_SESSION["user"] ?> </a>
+      </td>
 
-        <?php if ($_SESSION["login_session"] == false) { ?>
-
-          <a href="login.php">This page for user only.</a>
-
-        <?php } else { ?>
-          <?php if ($_SESSION["id"] != "1") { ?>
-            <a href="index.php">This page for admin only.</a>
-          <?php } else { ?>
-
-            <a>hello <?= $_SESSION["user"] ?> </a>
-          <?php } ?>
-        <?php } ?>
     </tr>
 
     <tr>
       <td>用戶名稱</td>
       <td>用戶手機</td>
       <td>用戶帳號</td>
-      <td>用戶密碼</td>
+
     </tr>
 
 
@@ -75,12 +65,17 @@ $result = mysqli_query($link, $sql);
           <td><?= $row["username"] ?></td>
           <td><?= $row["userphone"] ?></td>
           <td><?= $row["account"] ?></td>
-          <td><?= $row["password"] ?></td>
+
 
 
           <td>
-            <a href="edit.php?id=<?= $row["studentsId"] ?>" class="btn btn-success btn-sm">Edit</a>
-            <a href="admindelete.php?id=<?= $row["studentsId"] ?>" class="btn btn-danger btn-sm">Delete</a>
+            <a href="shop_car.php?id=<?= $row["userId"] ?>" class="btn btn-info btn-sm">查看購買清單</a>
+          <?php if($row["black"]==0) {?>
+            <a href="change_black.php?id=<?= $row["userId"] ?>" class="btn btn-danger btn-sm">加入黑名單</a>
+          <?php }else{ ?>
+          <a href="change_black.php?id=<?= $row["userId"] ?>" class="btn btn-success btn-sm">取消黑名單</a>
+          <?php } ?>
+          
           </td>
     </tr>
   <?php  } ?>

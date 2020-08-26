@@ -4,8 +4,7 @@ session_start();
 require("connDB.php");
 
 
-$id=$_SESSION['id'];
-
+$id = $_GET['id'];
 //如果按下確認
 if (isset($_POST["btnOK"])) {
 
@@ -27,7 +26,7 @@ multi;
 
   //顯示購物車內容
   $sql = <<<multi
-  select c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
+  select username,c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
@@ -35,12 +34,13 @@ multi;
   ORDER BY shoplistID ASC
   multi;
   $result = mysqli_query($link, $sql);
+
 
 } else {
 
   //顯示購物車內容
   $sql = <<<multi
-  select c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
+  select username,c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
@@ -48,6 +48,8 @@ multi;
   ORDER BY shoplistID ASC
   multi;
   $result = mysqli_query($link, $sql);
+
+
 }
 
 ?>
@@ -93,7 +95,14 @@ multi;
 
         <?php } else { ?>
 
-          <a>hello <?= $_SESSION["user"] ?> </a>
+          <a>Ｈello <?= $_SESSION["user"] ?> </a>
+
+          <?php if ($_SESSION["id"] == 1) { ?>
+            
+            <a>這是 <?=$id ?> 號客人的訂單</a>
+
+                        
+        <?php } ?>
         <?php } ?>
 
     </tr>
@@ -111,29 +120,33 @@ multi;
 
 
       <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-
-        <!-- <td><?= $row["shoplistID"] ?></td> -->
+       
         <td><?= $row["itemname"] ?></td>
         <td><?= $row["itemprice"] ?></td>
         <td><?= $row["species"] ?></td>
+        <?php if ($_SESSION['id'] != 1) { ?>
 
+          <td valign="baseline" width="0">
 
-        <td valign="baseline" width="0">
+            <form id="form1" name="form1" method="post">
+              <input type="text" name="txtQuantity" id="txtQuantity" value="<?php echo $row["quantity"]; ?>" />
 
-          <form id="form1" name="form1" method="post">
-            <input type="text" name="txtQuantity" id="txtQuantity" value="<?php echo $row["quantity"]; ?>" />
-
-        </td>
-
+          </td>
+        <?php } else { ?>
+          <td><?= $row["quantity"] ?></td>
+        <?php } ?>
         <td><?= $row["totalprice"] ?></td>
 
+        <?php if ($_SESSION['id'] != 1) { ?>
+          <td>
 
-        <td>
+            <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
+            <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["shoplistID"] ?>" />
+            <a href="delete_list.php?id=<?= $row["shoplistID"] ?>" class="btn btn-danger btn-sm">Delete</a>
+          </td>
 
-          <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
-          <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["shoplistID"] ?>" />
-          <a href="delete_list.php?id=<?= $row["shoplistID"] ?>" class="btn btn-danger btn-sm">Delete</a>
-        </td>
+
+        <?php } ?>
         </form>
     </tr>
 

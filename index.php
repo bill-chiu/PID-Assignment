@@ -27,7 +27,7 @@ if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] != "0") {
 multi;
 
   $result = mysqli_query($link, $sql);
-  header("location:echo.php");
+  header("location:index.php");
   exit();
   //返回瀏覽介面
 } else {

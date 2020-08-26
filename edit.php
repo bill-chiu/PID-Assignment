@@ -30,7 +30,7 @@ if (!is_numeric($id)) {
 require("connDB.php");
 
 //如果都有輸入 把輸入的值post給變數
-if (isset($_POST["btnOK"]) && $_POST["txtUserPhone"] != "" && $_POST["txtUserAccount"] != "" && $_POST["txtPassword"] != "") {
+if (isset($_POST["btnOK"]) && $_POST["txtUserPhone"] != ""&& $_POST["txtPassword"] != "") {
   $username = $_POST["txtUserName"];
   $userphone = $_POST["txtUserPhone"];
   $account = $_POST["txtUserAccount"];
@@ -46,33 +46,20 @@ if (isset($_POST["btnOK"]) && $_POST["txtUserPhone"] != "" && $_POST["txtUserAcc
 
 
   // 是否有查詢到有相同帳號
-  if ($total_records > 0) {
 
-    echo "<center><font color='red'>";
-    echo "此帳戶已被註冊!<br/>";
-    echo "</font>";
-
-    $sql = "select * from shopuser where userId =$id";
-
-    $result = mysqli_query($link, $sql);
-    $row = mysqli_fetch_assoc($result);
-
-    //如果沒有相同帳號則修改內容
-  } else {
-    $sql = <<<multi
+  $sql = <<<multi
     update shopuser set 
     username='$username',
     userphone='$userphone',
-    account='$account',
     password='$password'
     where shopuser .userId=$id
 multi;
-    $result = mysqli_query($link, $sql);
-    $_SESSION['user'] = $username;
+  $result = mysqli_query($link, $sql);
+  $_SESSION['user'] = $username;
 
-    header("location:index.php");
-    exit();
-  }
+  header("location:index.php");
+  exit();
+
   //把數值放進空格裡面 方便檢視
 } else {
 
@@ -128,10 +115,7 @@ multi;
         <td valign="baseline"><input type="text" name="txtUserPhone" id="txtUserPhone" value="<?= $row["userphone"] ?>" /></td>
       </tr>
 
-      <tr>
-        <td width="100" align="center" valign="baseline">使用者帳號</td>
-        <td valign="baseline"><input type="text" name="txtUserAccount" id="txtUserAccount" value="<?= $row["account"] ?>" /></td>
-      </tr>
+
       <tr>
         <td width="100" align="center" valign="baseline">使用者密碼</td>
         <td valign="baseline"><input type="password" name="txtPassword" id="txtPassword" value="<?= $row["password"] ?>" /></td>

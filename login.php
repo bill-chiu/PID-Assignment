@@ -53,13 +53,13 @@ if ($account != "" && $password != "") {
   $row = mysqli_fetch_assoc($result);
   if ($row["black"] != 1) {
 
-
     // && $_SESSION['verification '] == $verif
     // 成功登入, 指定Session變數
     $_SESSION['user'] =  $row["username"];
     $_SESSION['id'] =  $row["userId"];
     $_SESSION['moneynow'] = $row["money"];
     $_SESSION["login_session"] = true;
+  
 
     header("Location: index.php");
   } else {

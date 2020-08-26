@@ -17,7 +17,7 @@ if (isset($_POST["btnOK"])) {
     echo $sql;
     require("connDB.php");
     mysqli_query($link, $sql);
-    header("location:echo.php");
+    header("location:index.php");
     //如果有未輸入
 }else{
     echo "<center><font color='red'>";
