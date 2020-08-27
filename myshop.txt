@@ -42,16 +42,17 @@ CREATE TABLE itemlists (
   itemID int AUTO_INCREMENT not null primary key,
   itemname varchar(12) NOT NULL,
   itemprice int NOT NULL,
-  species set('eat', 'book', 'toy','wear')
+  species set('eat', 'book', 'toy','wear'),
+  remaining int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO itemlists (itemname, itemprice,species) VALUES
-('羊肉爐', '200','eat'),
-('羊皮大衣', '800','wear'),
-('變形金剛', '300','toy'),
-('烤肉醬', '150','eat'),
-('哈利波特', '1400','book'),
-('牛仔褲', '700','wear');
+INSERT INTO itemlists (itemname, itemprice,species,remaining) VALUES
+('羊肉爐', '200','eat','100'),
+('羊皮大衣', '800','wear','1000'),
+('變形金剛', '300','toy','10'),
+('烤肉醬', '150','eat','1000'),
+('哈利波特', '1400','book','11111'),
+('牛仔褲', '700','wear','110);
 
 
 CREATE TABLE shopdetail (

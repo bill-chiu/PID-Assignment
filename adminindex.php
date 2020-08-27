@@ -49,7 +49,7 @@ multi;
 
 <body>
 
-    <table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
 
         <td align="left" bgcolor="#CCCCCC">
@@ -78,7 +78,7 @@ multi;
         </tr>
 
     </table>
-    <table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
         <tr>
             <td colspan="" align="center" bgcolor="#F2F2F2">
@@ -89,11 +89,11 @@ multi;
 
         <tr>
             <td>項目名稱</td>
+            <td></td>
             <td>價格</td>
             <td>種類</td>
-            <?php if ($_SESSION["login_session"] != false) { ?>
-                <td>數量</td>
-            <?php } ?>
+            <td>庫存數量</td>
+
         </tr>
 
 
@@ -102,13 +102,12 @@ multi;
 
 
                 <form id="form1" name="form1" method="post">
-                    <td><?= $row["itemname"] ?><a ><img src="item_image/<?=$row["itemname"] ?>.png" width="100" height="100"></a></td>
-
-
+                    <td><?= $row["itemname"] ?></td>
+                    <td> <a><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
                     <td> <input type="text" name="txtprice" id="txtprice" value="<?= $row["itemprice"] ?>" /></td>
-
-
                     <td><?= $row["species"] ?></td>
+                    <td> <input type="text" name="txtremaining" id="txtremaining" value="<?= $row["remaining"] ?>" /></td>
+
                     <td>
                         <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
                         <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["itemID"] ?>" />
@@ -124,7 +123,7 @@ multi;
 
 
 
-    <table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
         <td align="left" bgcolor="#CCCCCC">
             <font color="#CCCCCC"> <a href="admin.php" class="btn btn-primary   btn-sm">回管理資料目錄</a></font>
         </td>

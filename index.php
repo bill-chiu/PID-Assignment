@@ -75,7 +75,7 @@ multi;
 
       <?php } else { ?>
         <a>hello <?= $_SESSION["user"] ?> </a>
-        <a ><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
+        <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
         <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-primary   btn-sm">購物車</a>
         <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
         <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-success  btn-sm">修改帳號</a>
@@ -100,11 +100,14 @@ multi;
 
     <tr>
       <td>項目名稱</td>
+      <td></td>
       <td>價格</td>
       <td>種類</td>
       <?php if ($_SESSION["login_session"] != false) { ?>
         <td>數量</td>
+
       <?php } ?>
+      <td>剩餘數量</td>
     </tr>
 
 
@@ -113,20 +116,19 @@ multi;
 
 
         <form id="form1" name="form1" method="post">
-          <td><?= $row["itemname"] ?>  <a ><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
-          
-          <?php if ($_SESSION["login_session"] != false) { ?>
-            <td><?= $row["itemprice"] ?></td>
-          <?php } else { ?>
+          <td><?= $row["itemname"] ?> </td>
+          <td><a><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
 
-            <td> <input type="text" name="txtprice" id="txtprice" value="<?= $row["itemprice"] ?>" /></td>
-          <?php  } ?>
+
+          <td><?= $row["itemprice"] ?></td>
+
 
           <td><?= $row["species"] ?></td>
           <?php if ($_SESSION["login_session"] != false) { ?>
 
             <td> <input type="text" name="txtQuantity" id="txtQuantity" value="0" /></td>
           <?php } ?>
+          <td><?= $row["remaining"] ?> </td>
 
           <td>
             <?php if ($_SESSION["login_session"] == false) { ?>

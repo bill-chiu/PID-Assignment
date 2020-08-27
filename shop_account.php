@@ -10,7 +10,7 @@ $sql = <<<multi
 select * from shopuser
 multi;
 $result = mysqli_query($link, $sql);
-
+$row = mysqli_fetch_assoc($result)
 ?>
 
 
