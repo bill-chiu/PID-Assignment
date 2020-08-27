@@ -32,7 +32,7 @@ $userId=$row['userId'];
 //加入到訂單
 $sql = <<<multi
 INSERT INTO shopdetail (detailID,itemname,itemprice,species,quantity,totalprice,userId,data) VALUES
-('$newdetailID','$itemname', '$itemprice','$species','$quantity','$totalprice','$userId',current_timestamp())
+('$newdetailID','$itemname', '$itemprice','$species','$quantity','$totalprice','$userId',current_date())
 
 multi;
 require("connDB.php");

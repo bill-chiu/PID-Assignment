@@ -14,7 +14,7 @@ $result = mysqli_query($link, $sql);
 //顯示清單內容
 $sql = <<<multi
     SELECT * FROM `shopdetail`  
-    WHERE userId =5
+    WHERE userId =$id
     ORDER BY `shopdetail`.`detailID` ASC
   multi;
 $result = mysqli_query($link, $sql);
@@ -70,7 +70,7 @@ $result = mysqli_query($link, $sql);
             <td>種類</td>
             <td>數量</td>
             <td>總價</td>
-            <!-- <td>小計</td> -->
+            <td>日期</td>
         </tr>
 
 
@@ -90,11 +90,6 @@ $result = mysqli_query($link, $sql);
                         echo "小計:" . $detail_total_price;
                     } ?></td>
 
-
-
-        <!-- <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2"> -->
-
-        <!-- </table>  -->
 
         <tr>
             <?php $detail_total_price += $row["totalprice"]; ?>
@@ -117,19 +112,10 @@ $result = mysqli_query($link, $sql);
 
             <td><?= $row["quantity"] ?></td>
             <td><?= $row["totalprice"] ?></td>
+            <td><?= $row["data"] ?></td>
 
-            <!-- <?php if ($detailID == $row["detailID"]) {
 
-                        $detail_total_price += $row["totalprice"]; ?>
-                <td><?= $detail_total_price ?></td>
 
-            <?php  } else {
-
-                        $detail_total_price = 0;
-
-            ?>
-
-            <?php  } ?> -->
         </tr>
         <tr>
         </tr>
