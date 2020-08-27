@@ -69,7 +69,7 @@ $result = mysqli_query($link, $sql);
 
 
           <td>
-            <a href="shop_car.php?id=<?= $row["userId"] ?>" class="btn btn-info btn-sm">查看購買清單</a>
+            <a href="see_checkout.php?id=<?= $row["userId"] ?>" class="btn btn-info btn-sm">查看購買清單</a>
           <?php if($row["black"]==0) {?>
             <a href="change_black.php?id=<?= $row["userId"] ?>" class="btn btn-danger btn-sm">加入黑名單</a>
           <?php }else{ ?>

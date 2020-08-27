@@ -22,20 +22,19 @@ $account = "";
 $password = "";
 $verif = "";
 
-//如果按下確認按鈕
-
-if (isset($_POST["btnOK"])) {
-  $account = $_POST["txtUserAccount"];
-  $password = $_POST["txtPassword"];
-  $verif = $_POST["Verif"];
-}
-
 //如果按下回首頁
 if (isset($_POST["btnLogin"])) {
 
   header("Location: add.php");
   exit();
 }
+//如果按下確認按鈕
+
+if (isset($_POST["btnOK"])) {
+  $account = $_POST["txtUserAccount"];
+  $password = $_POST["txtPassword"];
+  $verif = $_POST["Verif"];
+
 // 檢查是否輸入使用者名稱和密碼
 if ($account != "" && $password != "") {
   // 建立MySQL的資料庫連接 
@@ -48,26 +47,26 @@ if ($account != "" && $password != "") {
   $total_records = mysqli_num_rows($result);
 
 
- // 是否有查詢到使用者記錄以及驗證碼是否正確
- if ($total_records > 0 && $_SESSION['verification '] == $verif) {
-  $row = mysqli_fetch_assoc($result);
-  if ($row["black"] != 1) {
+  // 是否有查詢到使用者記錄以及驗證碼是否正確
+  if ($total_records > 0 && $_SESSION['verification '] == $verif) {
+    $row = mysqli_fetch_assoc($result);
+    if ($row["black"] != 1) {
 
-    // && $_SESSION['verification '] == $verif
-    // 成功登入, 指定Session變數
-    $_SESSION['user'] =  $row["username"];
-    $_SESSION['id'] =  $row["userId"];
-    $_SESSION['account']=$row["account"];
-    $_SESSION["login_session"] = true;
-  
+      // && $_SESSION['verification '] == $verif
+      // 成功登入, 指定Session變數
+      $_SESSION['user'] =  $row["username"];
+      $_SESSION['id'] =  $row["userId"];
+      $_SESSION['account'] = $row["account"];
+      $_SESSION["login_session"] = true;
 
-    header("Location: index.php");
-  } else {
-    randowverif();
-    echo "<center><font color='red'>";
-    echo "帳號已被黑名單!<br/>";
-    echo "</font>";
-  }
+
+      header("Location: index.php");
+    } else {
+      randowverif();
+      echo "<center><font color='red'>";
+      echo "帳號已被黑名單!<br/>";
+      echo "</font>";
+    }
     // 登入失敗
   } else {
     randowverif();
@@ -94,8 +93,9 @@ if ($account != "" && $password != "") {
   echo "<center><font color='red'>";
   echo "使用者名稱或密碼未輸入!<br/>";
   echo "</font>";
+  
 }
-
+}
 ?>
 
 <html>
@@ -142,9 +142,9 @@ if ($account != "" && $password != "") {
       </tr>
       <tr>
         <td colspan="2" align="center" bgcolor="#CCCCCC">
-          <input type="submit" name="btnOK" id="btnOK" value="登入" class="btn btn-success btn-sm"/>
-          
-          <input type="reset" name="btnReset" id="btnReset" value="重設" class="btn btn-success btn-sm"/>
+          <input type="submit" name="btnOK" id="btnOK" value="登入" class="btn btn-success btn-sm" />
+
+          <input type="reset" name="btnReset" id="btnReset" value="重設" class="btn btn-success btn-sm" />
           <input type="submit" name="btnLogin" id="btnLogin" value="註冊" class="btn btn-success btn-sm" />
         </td>
       </tr>

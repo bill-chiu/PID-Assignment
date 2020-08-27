@@ -76,7 +76,7 @@ multi;
 
       <td align="left" bgcolor="#CCCCCC">
         <font color="#FFFFFF">會員系統 － 管理員專用</font>
-
+        <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-primary  btn-sm">查看訂單</a>
       </td>
 
     </tr>
@@ -107,7 +107,7 @@ multi;
     <tr>
       <td>項目名稱</td>
       <td>價格</td>
-      <td>總累</td>
+      <td>種類</td>
       <td>數量</td>
       <td>總價</td>
     </tr>
@@ -157,9 +157,10 @@ multi;
 
 
   <tr>
-    <td align="left" bgcolor="#CCCCCC">
-    <a href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
+    <td  align="right" bgcolor="#CCCCCC">
+  
       <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
+      <a  href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
     </td>
 
   </tr>
