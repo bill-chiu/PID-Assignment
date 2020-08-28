@@ -188,7 +188,7 @@ multi;
           <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
           <td>
             <?php if ($_SESSION["login_session"] == false) { ?>
-              <a href="login.php" class="btn btn-danger btn-sm">新增</a>
+              <a href="login.php" class="btn btn-danger btn-sm">購買</a>
             <?php } else { ?>
 
               <input type="submit" name="btnOK" id="btnOK" value="新增" class="btn btn-success btn-sm" />
