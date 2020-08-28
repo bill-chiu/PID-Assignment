@@ -47,7 +47,8 @@ if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] > 0) {
       where shoplists .userId=$id and shoplists .itemID=$itemid
 multi;
       $result = mysqli_query($link, $sql);
-      header("Location:shop_car.php?id=$id");
+        header("Location:index.php");
+      // header("Location:shop_car.php?id=$id");
     } else {
       echo "<center><font color='red'>";
       echo "剩餘數量不足!<br/>";
@@ -68,7 +69,8 @@ multi;
 multi;
 
       $result = mysqli_query($link, $sql);
-      header("Location:shop_car.php?id=$id");
+      header("Location:index.php");
+      // header("Location:shop_car.php?id=$id");
       exit();
     } else {
       echo "<center><font color='red'>";
