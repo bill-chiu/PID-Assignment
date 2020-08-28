@@ -2,7 +2,7 @@
 
 session_start();
 require("connDB.php");
-
+$detail_total_price = 0;
 
 $id = $_GET['id'];
 //如果按下確認
@@ -14,19 +14,39 @@ if (isset($_POST["btnOK"])) {
   //記錄欲修改之數量
   $quantity = $_POST["txtQuantity"];
 
-  //更新數量
-  $sql = <<<multi
+  //記錄剩餘數量
+  $remaining = $_POST["btnremaining"];
+
+  //如果修改數量=0
+  echo $listid;
+  if ($_POST["txtQuantity"] <= 0) {
+
+    header("Location: delete_list.php?id=$listid");
+
+  } else {
+
+
+    //如果剩餘數量大於修改數量
+    if ($remaining >= $quantity) {
+
+      //更新數量
+      $sql = <<<multi
     UPDATE shoplists SET 
     quantity = '$quantity' 
     WHERE shoplists .shoplistID =$listid
 
 multi;
+      $result = mysqli_query($link, $sql);
+    } else {
 
-  $result = mysqli_query($link, $sql);
-
+      echo "<center><font color='red'>";
+      echo "剩餘數量不足!<br/>";
+      echo "</font>";
+    }
+  }
   //顯示購物車內容
   $sql = <<<multi
-  select username,c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
+  select username,c.userId,itemname,itemprice,species,quantity,od.remaining,shoplistID,itemprice*quantity as totalprice
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
@@ -34,13 +54,13 @@ multi;
   ORDER BY shoplistID ASC
   multi;
   $result = mysqli_query($link, $sql);
-
-
 } else {
 
+
+
   //顯示購物車內容
   $sql = <<<multi
-  select username,c.userId,itemname,itemprice,species,quantity,shoplistID,itemprice*quantity as totalprice
+  select username,c.userId,itemname,itemprice,species,quantity,od.remaining,shoplistID,itemprice*quantity as totalprice
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
@@ -48,8 +68,6 @@ multi;
   ORDER BY shoplistID ASC
   multi;
   $result = mysqli_query($link, $sql);
-
-
 }
 
 ?>
@@ -80,8 +98,8 @@ multi;
       </td>
 
     </tr>
-    </table>
-    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+  </table>
+  <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
     <tr>
 
       <td align="left" valign="baseline">
@@ -95,11 +113,11 @@ multi;
           <a>Ｈello <?= $_SESSION["user"] ?> </a>
 
           <?php if ($_SESSION["id"] == 1) { ?>
-            
-            <a>這是 <?=$id ?> 號客人的訂單</a>
 
-                        
-        <?php } ?>
+            <a>這是 <?= $id ?> 號客人的訂單</a>
+
+
+          <?php } ?>
         <?php } ?>
 
     </tr>
@@ -109,6 +127,7 @@ multi;
       <td>價格</td>
       <td>種類</td>
       <td>數量</td>
+      <td>剩餘數量</td>
       <td>總價</td>
     </tr>
 
@@ -116,8 +135,10 @@ multi;
     <tr>
 
 
-      <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-       
+      <?php while ($row = mysqli_fetch_assoc($result)) {
+
+      ?>
+
         <td><?= $row["itemname"] ?></td>
         <td><?= $row["itemprice"] ?></td>
         <td><?= $row["species"] ?></td>
@@ -132,18 +153,21 @@ multi;
         <?php } else { ?>
           <td><?= $row["quantity"] ?></td>
         <?php } ?>
-        <td><?= $row["totalprice"] ?></td>
+        <td><?= $row["remaining"] ?></td>
+        <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
+        <td><?php echo $row["totalprice"];
 
-        <?php if ($_SESSION['id'] != 1) { ?>
-          <td>
+            $detail_total_price += $row["totalprice"];
+            ?></td>
 
-            <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
-            <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["shoplistID"] ?>" />
-            <a href="delete_list.php?id=<?= $row["shoplistID"] ?>" class="btn btn-danger btn-sm">Delete</a>
-          </td>
+        <td>
+
+          <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
+          <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["shoplistID"] ?>" />
+          <a href="delete_list.php?id=<?= $row["shoplistID"] ?>" class="btn btn-danger btn-sm">Delete</a>
+        </td>
 
 
-        <?php } ?>
         </form>
     </tr>
 
@@ -156,14 +180,14 @@ multi;
   <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
 
-  <tr>
-    <td  align="right" bgcolor="#CCCCCC">
-  
-      <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
-      <a  href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
-    </td>
+    <tr>
+      <td align="right" bgcolor="#CCCCCC">
+        <?= "小計:" . $detail_total_price ?>
+        <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
+        <a href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
+      </td>
 
-  </tr>
+    </tr>
   </table>
 
 

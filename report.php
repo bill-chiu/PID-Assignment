@@ -180,8 +180,8 @@ multi;
     <?php  } ?>
 
     </table>
-    <table width="800" border="0" align="right" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-        <tr align="center">
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+        <tr align="right">
             <td><?php echo "小計:" . $detail_total_price; ?></td>
 
 

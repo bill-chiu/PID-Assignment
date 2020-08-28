@@ -10,24 +10,77 @@ if ($_SESSION['id'] == 1) {
   header("location:admin.php");
 }
 
+global $remaining;
 
+echo $remaining;
 //如果按下按鈕且不為0
-if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] != "0") {
+if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] > 0) {
 
   //記錄欲購買數量
   $itemid = $_POST["btn444"];
+  $remaining = $_POST["btnremaining"];
   echo $itemid;
+  echo $remaining;
   //加入到購物車
   $quantity = $_POST["txtQuantity"];
-  $sql = <<<multi
+
+  $sql = "SELECT * FROM `shoplists` where userId=$id and itemID=$itemid";
+  $result = mysqli_query($link, $sql);
+  $total_records = mysqli_num_rows($result);
+
+
+  // 是否有查詢到購買紀錄
+  if ($total_records > 0) {
+    $row = mysqli_fetch_assoc($result);
+    //記錄原本購買數量
+    $pastquantity = $row["quantity"];
+    echo "購買前數量" . $pastquantity;
+    //加上新購買的數量
+    $quantity = $pastquantity + $quantity;
+    echo "購買後數量" . $quantity;
+    //如果大於庫存則更新購買數量
+    if ($quantity <= $remaining) {
+
+      $sql = <<<multi
+      update shoplists set 
+      quantity='$quantity'
+      where shoplists .userId=$id and shoplists .itemID=$itemid
+multi;
+      $result = mysqli_query($link, $sql);
+      header("Location:shop_car.php?id=$id");
+    } else {
+      echo "<center><font color='red'>";
+      echo "剩餘數量不足!<br/>";
+      echo "</font>";
+
+      $sql = <<<multi
+      select * from itemlists 
+      multi;
+      $result = mysqli_query($link, $sql);
+    }
+    //如果沒有購買紀錄
+  } else {
+    if ($quantity <= $remaining) {
+      $sql = <<<multi
   INSERT INTO shoplists (itemID, quantity,userId) VALUES
   ('$itemid', '$quantity','$id')
 
 multi;
 
-  $result = mysqli_query($link, $sql);
-  header("Location:shop_car.php?id=$id");
-  exit();
+      $result = mysqli_query($link, $sql);
+      header("Location:shop_car.php?id=$id");
+      exit();
+    } else {
+      echo "<center><font color='red'>";
+      echo "剩餘數量不足!<br/>";
+      echo "</font>";
+
+      $sql = <<<multi
+    select * from itemlists 
+    multi;
+      $result = mysqli_query($link, $sql);
+    }
+  }
   //返回瀏覽介面
 } else {
 
@@ -128,8 +181,9 @@ multi;
 
             <td> <input type="text" name="txtQuantity" id="txtQuantity" value="0" /></td>
           <?php } ?>
-          <td><?= $row["remaining"] ?> </td>
+          <td><?php echo $row["remaining"]; ?> </td>
 
+          <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
           <td>
             <?php if ($_SESSION["login_session"] == false) { ?>
               <a href="login.php" class="btn btn-danger btn-sm">新增</a>

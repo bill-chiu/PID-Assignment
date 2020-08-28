@@ -12,33 +12,67 @@ $newdetailID=$row['detailID']+1;
 
 //搜尋購物車清單
 $sql = <<<multi
-select username,c.userId,od.itemname,od.itemprice,od.species,quantity,itemprice*quantity as totalprice
+select username,c.userId,od.itemname,od.itemprice,od.species,quantity,od.remaining,od.itemID,itemprice*quantity as totalprice
 
 from shopuser c join shoplists o on o.userId =c.userId
                 join itemlists od on od.itemID =o.itemID
-where c.userId=5
+where c.userId=$id
 
 multi;
-require("connDB.php");
 $result = mysqli_query($link, $sql);
 while ($row = mysqli_fetch_assoc($result)) {
-
+$remaining=$row['remaining'];
 $itemname=$row['itemname'];
 $itemprice=$row['itemprice'];
 $species=$row['species'];
 $quantity=$row['quantity'];
 $totalprice=$row['totalprice'];
 $userId=$row['userId'];
+$itemid=$row['itemID'];
+$remaining=$remaining-$quantity;
+
+
+if($remaining>=0){
 //加入到訂單
 $sql = <<<multi
 INSERT INTO shopdetail (detailID,itemname,itemprice,species,quantity,totalprice,userId,data) VALUES
-('$newdetailID','$itemname', '$itemprice','$species','$quantity','$totalprice','$userId',current_date())
-
+('$newdetailID','$itemname', '$itemprice','$species','$quantity','$totalprice','$userId',current_date());
 multi;
-require("connDB.php");
+mysqli_query($link, $sql);
+
+
+$sql = <<<multi
+update itemlists set 
+remaining='$remaining'
+where itemlists .itemID='$itemid'
+multi;
 mysqli_query($link, $sql);
 echo $sql;
 }
+else {
+    $remaining=$remaining+$quantity;
+    $sql = <<<multi
+
+    update shoplists set 
+    quantity='$remaining'
+    where userId=$id
+
+multi;
+mysqli_query($link, $sql);
+
+    echo "<center><font color='red'>";
+      echo "物品數量有異動! 已將您的數量調整為庫存數量<br/>";
+      echo "</font>";
+      header("Refresh:2;shop_car.php?id=$id");
+
+
+      exit();
+
+}
+
+
+}
+
 //刪除購物車
 $sql ="DELETE FROM `shoplists` WHERE `shoplists`.`userId` = $id";
 require("connDB.php");
@@ -46,4 +80,3 @@ mysqli_query($link, $sql);
 
 
 header("Location: index.php");
-?>

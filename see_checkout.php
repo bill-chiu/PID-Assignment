@@ -15,7 +15,7 @@ $result = mysqli_query($link, $sql);
 $sql = <<<multi
     SELECT * FROM `shopdetail`  
     WHERE userId =$id
-    ORDER BY `shopdetail`.`detailID` ASC
+    ORDER BY `shopdetail`.`detailID` DESC
   multi;
 $result = mysqli_query($link, $sql);
 ?>

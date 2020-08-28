@@ -8,16 +8,18 @@ $id = $_SESSION['id'];
 
 if (isset($_POST["btnOK"])) {
 
-
+    $remaining = $_POST["txtremaining"];
     $itemprice = $_POST["txtprice"];
     //抓到物品編號
     $itemid = $_POST["btn444"];
     //修改物品價格
-    $sql = <<<multi
-  UPDATE `itemlists` 
-  SET `itemprice` = '$itemprice' 
-  WHERE `itemlists`.`itemID` = $itemid
 
+
+    $sql = <<<multi
+  UPDATE `itemlists`  SET
+  `itemprice` = '$itemprice' ,
+  `remaining` = '$remaining' 
+  WHERE `itemlists`.`itemID` = $itemid
 multi;
 
     $result = mysqli_query($link, $sql);
