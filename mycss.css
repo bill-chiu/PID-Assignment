@@ -22,6 +22,9 @@ input[type="submit"]{padding:5px 15px;
 input[type="file"]{
     width:200px;
 }
+select{
+    width:200px;
+}
 input[type="reset"]{padding:5px 15px; 
     cursor:pointer;
     width:200px;

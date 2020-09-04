@@ -2,7 +2,9 @@
 
 session_start();
 require("connDB.php");
-
+if (($_SESSION['num'] > 5)) {
+  $_SESSION['num'] = 1;
+}
 $id = $_SESSION['id'];
 //顯示會員
 $sql = <<<multi
@@ -10,10 +12,7 @@ select * from shopuser where userId =$id
 multi;
 $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_assoc($result);
-
 ?>
-
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

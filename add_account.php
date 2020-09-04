@@ -21,26 +21,22 @@ if (isset($_POST["btnOK"])) {
     // 是否有查詢到有相同帳號
     if ($total_records > 0) {
 
-      echo "<center><font color='red'>";
-      echo "此帳戶已被註冊!<br/>";
-      echo "</font>";
+      echo "<script>alert('此帳戶已被註冊')</script>";
       //把值新增到顧客名單
-      header("Refresh:2;add.php");
+      header("Refresh:1;add.php");
       exit();
     } else {
 
   // 上傳檔案並存入資料庫
-
  
     // 檔案上傳並顯示基本資料
     echo "<center><font color='red'>";
 
-
-    echo "檔案名稱: " . $_FILES['myfile']['name'] . "<br>";
-    echo "檔案大小: " . $_FILES['myfile']['size'] . "<br>";
-    echo "檔案格式: " . $_FILES['myfile']['type'] . "<br>";
-    echo "暫存名稱: " . $_FILES['myfile']['tmp_name'] . "<br>";
-    echo "錯誤代碼: " . $_FILES['myfile']['error'] . "<br>";
+    // echo "檔案名稱: " . $_FILES['myfile']['name'] . "<br>";
+    // echo "檔案大小: " . $_FILES['myfile']['size'] . "<br>";
+    // echo "檔案格式: " . $_FILES['myfile']['type'] . "<br>";
+    // echo "暫存名稱: " . $_FILES['myfile']['tmp_name'] . "<br>";
+    // echo "錯誤代碼: " . $_FILES['myfile']['error'] . "<br>";
     
     // 檔案上傳後的偵錯
     if($_FILES['myfile']['error'] >0 ) {
@@ -74,21 +70,21 @@ if (isset($_POST["btnOK"])) {
     insert into shopuser (username,userphone,identityID,account,password,black)
     values ('$username','$userphone','$identityID','$account','$password',$black)
     multi;
-      echo $sql;
+  
       require("connDB.php");
       mysqli_query($link, $sql);
 
     }
-
-    header("Refresh:5;add.php");
+    echo "<script>alert('註冊成功')</script>";
+    header("Refresh:0.01;login.php");
     
   }
   //如果有沒輸入的
   else {
-    echo "<center><font color='red'>";
-    echo "有欄位未輸入!<br/>";
-    echo "</font>";
-    header("Refresh:2;add.php");
+
+    echo "<script>alert('有欄位未輸入')</script>";
+
+    header("Refresh:1;add.php");
     exit();
   }
 }
