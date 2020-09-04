@@ -35,122 +35,133 @@ if (isset($_POST["btnOK"])) {
   $password = $_POST["txtPassword"];
   $verif = $_POST["Verif"];
 
-// 檢查是否輸入使用者名稱和密碼
-if ($account != "" && $password != "") {
-  // 建立MySQL的資料庫連接 
-  require("connDB.php");
-  // 建立SQL指令字串
-  $sql = "SELECT * FROM shopuser WHERE `password`='$password' AND `account`='$account'";
+  // 檢查是否輸入使用者名稱和密碼
+  if ($account != "" && $password != "") {
+    // 建立MySQL的資料庫連接 
+    require("connDB.php");
+    // 建立SQL指令字串
+    $sql = "SELECT * FROM shopuser WHERE `password`='$password' AND `account`='$account'";
 
-  // 執行SQL查詢
-  $result = mysqli_query($link, $sql);
-  $total_records = mysqli_num_rows($result);
-
-
-  // 是否有查詢到使用者記錄以及驗證碼是否正確
-  if ($total_records > 0 && $_SESSION['verification '] == $verif) {
-    $row = mysqli_fetch_assoc($result);
-    if ($row["black"] != 1) {
-
-      // && $_SESSION['verification '] == $verif
-      // 成功登入, 指定Session變數
-      $_SESSION['user'] =  $row["username"];
-      $_SESSION['id'] =  $row["userId"];
-      $_SESSION['account'] = $row["account"];
-      $_SESSION["login_session"] = true;
+    // 執行SQL查詢
+    $result = mysqli_query($link, $sql);
+    $total_records = mysqli_num_rows($result);
 
 
-      header("Location: index.php");
+    // 是否有查詢到使用者記錄以及驗證碼是否正確
+    if ($total_records > 0 && $_SESSION['verification '] == $verif) {
+      $row = mysqli_fetch_assoc($result);
+      if ($row["black"] != 1) {
+
+        // && $_SESSION['verification '] == $verif
+        // 成功登入, 指定Session變數
+        $_SESSION['user'] =  $row["username"];
+        $_SESSION['id'] =  $row["userId"];
+        $_SESSION['account'] = $row["account"];
+        $_SESSION["login_session"] = true;
+
+
+        header("Location: index.php");
+      } else {
+        randowverif();
+
+        echo "<script>alert('帳號已被黑名單')</script>";
+      }
+      // 登入失敗
     } else {
       randowverif();
-      echo "<center><font color='red'>";
-      echo "帳號已被黑名單!<br/>";
-      echo "</font>";
+      //如果沒有這個帳密
+      if (!$total_records > 0) {
+        echo "<script>alert('使用者名稱或密碼錯誤')</script>";
+        //如果驗證碼比對失敗
+      } else {
+
+        echo "<script>alert('驗證碼錯誤')</script>";
+      }
+
+      $_SESSION["login_session"] = false;
     }
-    // 登入失敗
+    // 關閉資料庫連接  
+    mysqli_close($link);
+    //如果有空白
   } else {
     randowverif();
-    //如果沒有這個帳密
-    if (!$total_records > 0) {
-      echo "<center><font color='red'>";
-      echo "使用者名稱或密碼錯誤!<br/>";
-      echo "</font>";
-      //如果驗證碼比對失敗
-    } else {
-      echo "<center><font color='red'>";
-      echo "驗證碼錯誤!<br/>";
-      echo "</font>";
-    }
+    echo "<script>alert('使用者名稱或密碼未輸入')</script>";
 
-    $_SESSION["login_session"] = false;
   }
-  // 關閉資料庫連接  
-  mysqli_close($link);
-  //如果有空白
-} else {
-  randowverif();
-
-  echo "<center><font color='red'>";
-  echo "使用者名稱或密碼未輸入!<br/>";
-  echo "</font>";
-  
-}
 }
 ?>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Lab - Login</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Lag - Member Page</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="mycss.css">
 </head>
 
 <body>
-  <form id="form1" name="form1" method="post">
 
-    <table width="300" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+  <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
-      <tr>
-        <td colspan="2" align="center" bgcolor="#CCCCCC">
-          <font color="#FFFFFF">購物車會員系統 - 登入</font>
-        </td>
-      </tr>
-      <tr>
-        <td width="150" align="center" valign="baseline">使用者帳號</td>
-        <td valign="baseline"><input type="text" name="txtUserAccount" id="txtUserAccount" /></td>
-      </tr>
-      <tr>
-        <td width="100" align="center" valign="baseline">使用者密碼</td>
-        <td valign="baseline"><input type="password" name="txtPassword" id="txtPassword" /></td>
-      </tr>
-      <tr>
-        <td width="100" align="center" valign="baseline">
-          <font size="4">驗證碼:</font>
-          <p><img src="<?php echo "images/" . $_SESSION['verification1 '] . '.png' ?>" />
-            <img src="<?php echo "images/" . $_SESSION['verification2 '] . '.png' ?>" />
-            <img src="<?php echo "images/" . $_SESSION['verification3 '] . '.png' ?>" />
-            <img src="<?php echo "images/" . $_SESSION['verification4 '] . '.png' ?>" /></p>
-        </td>
+    <form id="form1" name="form1" method="post">
+      <tr bgcolor="#AE0000">
+        <td>
+          <div>
+            <div></div>
+            <font color="#FFFFFF" align="center">登入</font>
+            <div>
 
-        <td><input type="text" name="Verif" />
+            </div>
+          </div>
         </td>
 
       </tr>
       <tr>
-        <td colspan="2" align="center" bgcolor="#CCCCCC">
-          <input type="submit" name="btnOK" id="btnOK" value="登入" class="btn btn-success btn-sm" />
+        <td align="center">
 
-          <input type="reset" name="btnReset" id="btnReset" value="重設" class="btn btn-success btn-sm" />
-          <input type="submit" name="btnLogin" id="btnLogin" value="註冊" class="btn btn-success btn-sm" />
-        </td>
+          <input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" /></td>
+      </tr>
+      <tr>
+        <td align="center">
+
+          <input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" /></td>
       </tr>
 
-    </table>
-  </form>
+      <tr>
+        <td align="center">
+          <input type="text" name="Verif" id="Verif" placeholder="驗證碼" /><br><br>
+          <img src="<?php echo "images/" . $_SESSION['verification1 '] . '.png' ?>" />
+          <img src="<?php echo "images/" . $_SESSION['verification2 '] . '.png' ?>" />
+          <img src="<?php echo "images/" . $_SESSION['verification3 '] . '.png' ?>" />
+          <img src="<?php echo "images/" . $_SESSION['verification4 '] . '.png' ?>" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <hr><input type="submit" name="btnOK" id="btnOK" value="登入" />
+          <input type="submit" name="btnLogin" id="btnLogin" value="註冊" />
+        </td>
+      </tr>
+      <tr bgcolor="#AE0000">
+        <td>
+          <div>
+            <font color="#AE0000">0</font>
+          </div>
+        </td>
+
+
+    </form>
+    </tr>
+
+    </div>
+  </table>
+
+
 </body>
 
 </html>

@@ -26,6 +26,9 @@ if (isset($_POST["btnOK"])) {
     } else {
 // 上傳檔案並存入資料庫
 
+
+
+
     // 檔案上傳並顯示基本資料
     echo "檔案名稱: " . $_FILES['myfile']['name'] . "<br>";
     echo "檔案大小: " . $_FILES['myfile']['size'] . "<br>";
@@ -58,18 +61,16 @@ if (isset($_POST["btnOK"])) {
       
       move_uploaded_file($_FILES['myfile']['tmp_name'], iconv("UTF-8", "UTF-8", $DestDIR . "/" . $ServerFilename)); //將上傳的暫存檔移動到指定目錄
     }
-
-
-
-
     //把值新增到物品清單
     $sql = <<<multi
-    INSERT INTO itemlists (itemname, itemprice,species) VALUES
-    ('$itemname', '$itemprice','$species')
+    INSERT INTO itemlists (itemname, itemprice,species,remaining) VALUES
+    ('$itemname', '$itemprice','$species','0')
     multi;
     echo $sql;
     require("connDB.php");
     mysqli_query($link, $sql);
+
+
     header("location:index.php");
     //如果有未輸入
 }

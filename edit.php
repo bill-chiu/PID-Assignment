@@ -73,65 +73,75 @@ multi;
 <!DOCTYPE html>
 <html lang="en">
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="css/jquery.toast.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Lag - Member Page</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <style>
-    .box {
-
-      padding-left: 100px;
-      padding-right: 100px;
-
-
-    }
-  </style>
+  <link rel="stylesheet" href="mycss.css">
 </head>
 
 <body>
-  <form id="form1" name="form1" method="post">
-    <table width="300" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
-      <tr>
-        <td colspan="2" align="center" bgcolor="#CCCCCC">
-          <font color="#FFFFFF">購物車系統 - 編輯帳戶</font><br>
-          <a>hello <?= $_SESSION["user"] ?> </a>
+  <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+
+    <form id="form1" name="form1" method="post">
+      <tr bgcolor="#AE0000">
+        <td>
+          <div id="title">
+            <div></div>
+            <font color="#FFFFFF" align="center">修改帳號</font>
+            <div>
+              <a href="index.php?id=<?= $row["userId"] ?>" id="back" class="btn btn-info btn-danger btn-sm">返回</a>
+            </div>
+          </div>
         </td>
 
       </tr>
-
       <tr>
-        <td width="100" align="center" valign="baseline">使用者名稱</td>
-        <td valign="baseline"><input type="text" name="txtUserName" id="txtUserName" value="<?= $row["username"] ?>"></td>
+        <td>使用者名稱<br>
+
+          <input type="text" name="txtUserName" id="txtUserName" value="<?= $row["username"] ?>"></td>
       </tr>
 
       <tr>
-        <td width="100" align="center" valign="baseline">使用者電話</td>
-        <td valign="baseline"><input type="text" name="txtUserPhone" id="txtUserPhone" value="<?= $row["userphone"] ?>" /></td>
-      </tr>
+        <td>使用者電話<br>
 
-
-      <tr>
-        <td width="100" align="center" valign="baseline">使用者密碼</td>
-        <td valign="baseline"><input type="password" name="txtPassword" id="txtPassword" value="<?= $row["password"] ?>" /></td>
+          <input type="text" name="txtUserPhone" id="txtUserPhone" value="<?= $row["userphone"] ?>" /></td>
       </tr>
 
       <tr>
-        <td colspan="2" align="center" bgcolor="#CCCCCC">
-          <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
-          <input type="reset" name="btnReset" id="btnReset" value="重設" class="btn btn-success btn-sm" />
-          <input type="submit" name="btnHome" id="btnHome" value="回首頁" class="btn btn-success btn-sm" />
-          <input type="submit" name="btnDelete" id="btnDelete" value="刪除帳號" class="btn btn-danger btn-sm" />
+        <td>使用者密碼<br>
+
+          <input type="password" name="txtPassword" id="txtPassword" value="<?= $row["password"] ?>" /></td>
+      </tr>
+      <tr>
+        <td>
+          <hr><input type="submit" name="btnOK" id="btnOK" value="修改" />
+
+          <input type="submit" name="btnDelete" id="btnDelete" value="刪除帳號" />
         </td>
       </tr>
+      <tr bgcolor="#AE0000">
+        <td>
+          <div>
+            <font color="#AE0000">123</font>
+          </div>
+        </td>
 
-    </table>
-  </form>
+
+    </form>
+    </tr>
+
+    </div>
+  </table>
+
+
 </body>
 
 </html>

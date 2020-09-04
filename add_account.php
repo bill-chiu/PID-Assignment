@@ -31,6 +31,7 @@ if (isset($_POST["btnOK"])) {
 
   // 上傳檔案並存入資料庫
 
+ 
     // 檔案上傳並顯示基本資料
     echo "<center><font color='red'>";
 
@@ -49,9 +50,6 @@ if (isset($_POST["btnOK"])) {
         case 3:echo("檔案大小僅被部份上傳");
         case 4:echo("檔案未被上傳");
         echo "</font>";
-        header("Refresh:3;add.php");
-        exit();
-    
       }
     
     }
@@ -69,10 +67,8 @@ if (isset($_POST["btnOK"])) {
       $ServerFilename = $_POST['txtUserAccount'] .  ".png";  // 自訂檔名  學年度_學號.pdf  ex. 10602_ADT105001.pdf
       
       move_uploaded_file($_FILES['myfile']['tmp_name'], iconv("UTF-8", "UTF-8", $DestDIR . "/" . $ServerFilename)); //將上傳的暫存檔移動到指定目錄
-      header("Refresh:5;add.php");
-      exit();
-    }
 
+    }
 
     $sql = <<<multi
     insert into shopuser (username,userphone,identityID,account,password,black)
@@ -81,6 +77,7 @@ if (isset($_POST["btnOK"])) {
       echo $sql;
       require("connDB.php");
       mysqli_query($link, $sql);
+
     }
 
     header("Refresh:5;add.php");
@@ -96,10 +93,8 @@ if (isset($_POST["btnOK"])) {
   }
 }
 //如果按下回首頁
-if (isset($_POST["btnHome"])) {
+if (isset($_POST["btnLogin"])) {
 
-  header("Location: index.php");
+  header("Location: login.php");
   exit();
 }
-?>
-

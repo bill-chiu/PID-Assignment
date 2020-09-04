@@ -77,3 +77,7 @@
 
 </html>
 
+if (isset($_POST["btnLogin"])) {
+
+header("Location: login.php");
+exit();
