@@ -91,7 +91,7 @@ a.bul { background:url(images/bul.gif) no-repeat 0 center; padding-left:10px;}
 
 .products {}
 .products ul{ list-style-type: none;}
-.products ul li{ position:relative; padding:1px; border:solid 1px #dedede; float:left; width:231px; margin-right:9px; height:383px; overflow:hidden; }
+.products ul li{ position:relative; padding:1px; border:solid 1px #dedede; float:left; width:200px; margin-right:5px; height:383px; overflow:hidden; }
 .products ul li.last{ margin-right:0; }
 
 .product-info{ position:absolute; width:153px; top:194px; left:0;}

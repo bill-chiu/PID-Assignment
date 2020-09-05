@@ -135,7 +135,7 @@ multi;
         <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-primary   btn-sm">購物車</a>
         <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
         <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-success  btn-sm">修改帳號</a>
-
+        <a href="AAA.php" class="btn btn-success  btn-sm">修改帳號</a>
       <?php } ?>
     </td>
     </tr>
