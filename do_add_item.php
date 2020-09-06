@@ -80,10 +80,10 @@ if (isset($_POST["btnOK"])) {
     echo "</font>";
 }
 }
-//如果按下回首頁
-if (isset($_POST["btnHome"])) {
+// //如果按下回首頁
+// if (isset($_POST["btnHome"])) {
 
-    header("Location: index.php");
-    exit();
-  }
+//     header("Location: index.php");
+//     exit();
+//   }
 ?>

@@ -29,32 +29,33 @@
       </tr>
       <tr>
         <td align="center">
-          <input type="text" name="txtUserName" id="txtUserName" placeholder="暱稱"></td>
+          <input type="text" name="txtUserName" id="txtUserName" placeholder="暱稱" required></td>
       </tr>
       <tr>
         <td align="center">
-            大頭照: <input type="file" name="myfile" id="myfile" />
+            大頭照: <input type="file" name="myfile" id="myfile" required/>
         </td>
       </tr>
-      <td align="center"><input type="text" name="txtIdentityID" id="txtIdentityID" placeholder="身分證字號" /></td>
+      <td align="center"><input type="text" name="txtIdentityID" id="txtIdentityID" placeholder="身分證字號" required /></td>
       </tr>
       <tr>
-        <td align="center"><input type="text" name="txtUserPhone" id="txtUserPhone" placeholder="電話" /></td>
+        <td align="center"><input type="text" name="txtUserPhone" id="txtUserPhone" placeholder="電話" required /></td>
       </tr>
       <tr>
-        <td align="center"><input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" /></td>
+        <td align="center"><input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" required /></td>
       </tr>
       <tr>
-        <td align="center"><input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" /></td>
+        <td align="center"><input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" required /></td>
       </tr>
       <tr>
         <td colspan="2" align="center">
 
           <hr>
+          <!-- <div id="aaa"> -->
           <input type="submit" name="btnOK" id="btnOK" value="註冊" />
           </form>
-          <input type="submit" name="btnLogin" id="btnLogin" value="我已經有帳號" />
-
+          <a id="aaa"href="login.php " >回首頁</a>
+          <!-- </div> -->
         </td>
       </tr>
       <tr bgcolor="#AE0000">

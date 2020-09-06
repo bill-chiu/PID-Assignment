@@ -173,7 +173,7 @@ multi;
 
         <form id="form1" name="form1" method="post">
           <td><?= $row["itemname"] ?> </td>
-          <td><a><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
+          <td><a class="123"><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
 
 
           <td><?= $row["itemprice"] ?></td>
@@ -192,7 +192,7 @@ multi;
               <a href="login.php" class="btn btn-danger btn-sm">購買</a>
             <?php } else { ?>
 
-              <input type="submit" name="btnOK" id="btnOK" value="新增" class="btn btn-success btn-sm" />
+              <input type="submit" name="btnOK" id="btnOK" value="新增" />
 
               <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["itemID"] ?>" />
             <?php } ?>

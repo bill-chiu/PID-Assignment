@@ -19,6 +19,18 @@ input[type="submit"]{padding:5px 15px;
     border-radius: 5px; 
     color: #fff;
 }
+#aaa{     padding:5px 15px; 
+    cursor:pointer;
+    background-color: #AE0000;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+    color: #fff;
+
+
+
+}
+
+
 input[type="file"]{
     width:200px;
 }
