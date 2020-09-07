@@ -4,6 +4,10 @@ session_start();
 require("connDB.php");
 $detail_total_price = 0;
 
+if($_SESSION['num']>5){
+  $_SESSION['num']=5;
+}
+
 $id = $_GET['id'];
 //如果按下確認
 if (isset($_POST["btnOK"])) {
@@ -35,6 +39,7 @@ if (isset($_POST["btnOK"])) {
     WHERE shoplists .shoplistID =$listid
 
 multi;
+echo "<script>alert('修改成功')</script>";
       $result = mysqli_query($link, $sql);
     } else {
 
@@ -82,7 +87,7 @@ multi;
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+  <link rel="stylesheet" href="mycss.css">
 </head>
 
 <body>
@@ -112,30 +117,22 @@ multi;
         </div>
   </header>
   <div class="py-5 ">
-    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2" id="shopcar">
       <tr>
-
-        <td align="left" bgcolor="#CCCCCC">
+        <td align="left" bgcolor="#CCCCCC" colspan="7">
           <font color="#FFFFFF">購物車</font>
-
         </td>
 
       </tr>
-    </table>
-    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-      <tr>
 
-        <td align="left" valign="baseline">
 
-      </tr>
-
-      <tr>
-        <td>項目名稱</td>
-        <td>庫存</td>
-        <td>數量</td>
-        <td>價格</td>
-        <td>小計</td>
-        <td>變更</td>
+      <tr bgcolor="#ddd">
+        <th colspan="2"> 項目名稱</th>
+        <th>庫存</th>
+        <th>數量</th>
+        <th>價格</th>
+        <td align="center"><b>小計</b></td>
+        <td align="center"><b>變更</b></td>
       </tr>
 
 
@@ -165,27 +162,27 @@ multi;
           }
           if ($row["quantity"] > 0) {        ?>
 
-            <td><?= $row["itemname"] ?></td>
+            <td colspan="2" id="shopcar3"><?= $row["itemname"] ?></td>
 
-            <td><?= $row["remaining"] ?></td>
+            <td id="shopcar2"><?= $row["remaining"] ?></td>
 
 
 
-            <td valign="baseline" width="0">
+            <td valign="baseline" width="0" id="shopcar2">
               <form id="form1" name="form1" method="post">
 
                 <input type="number" name="txtQuantity" id="txtQuantity" value="<?php echo $row["quantity"]; ?>" />
             </td>
 
             <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
-            <td>
-            <font color="#AE0000">  
-            <?= $row["itemprice"] ?>
-            </font>元
-          </td>
+            <td id="shopcar2">
+              <font color="#AE0000">
+                <?= $row["itemprice"] ?>
+              </font>元
+            </td>
 
 
-            <td>
+            <td align="center" id="shopcar1">
               <font color="red">
                 <?php echo $row["totalprice"];
 
@@ -194,11 +191,11 @@ multi;
               </font>元
             </td>
 
-            <td>
+            <td align="center" id="shopcar1">
 
-              <input type="submit" name="btnOK" id="btnOK" value="修改數量" class="btn btn-success btn-sm" />
+              <input type="submit" name="btnOK" id="btnOK" value="修改" />
               <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["shoplistID"] ?>" />
-              <a href="delete_list.php?id=<?= $row["shoplistID"] ?>" class="btn btn-danger btn-sm">刪除</a>
+              <br><a href="delete_list.php?id=<?= $row["shoplistID"] ?>" id="aurl" class="btn">刪除</a>
             </td>
 
           <?php } ?>
@@ -210,27 +207,35 @@ multi;
 
 
 
+
+    <tr align="right" bgcolor="#CCCCCC">
+      <td colspan="7" color="CCCCCC">
+      <font color="#CCCCCC">
+               1
+              </font>
+      </td>
+
+    </tr>
+    <tr>
+      <td colspan="4"></td>
+      <td align="right"> 總價:</td>
+      <td align="right" colspan="2">
+        <h5>
+        <font color="red">
+            <?= $detail_total_price ?>
+          </font>元
+
+        </h5>
+      </td>
+
+    </tr>
+    <tr>
+      <td align="right" colspan="7" bgcolor="white">
+        <a href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
+      </td>
+    </tr>
     </table>
-    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
-
-      <tr>
-        <td align="right" bgcolor="#CCCCCC">
-
-
-          <h5> 總價:
-            <font color="red">
-              <?= $detail_total_price ?>
-            </font>元
-            <a href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
-          </h5>
-
-
-
-        </td>
-
-      </tr>
-    </table>
   </div>
 
 </body>

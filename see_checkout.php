@@ -14,10 +14,17 @@ $result = mysqli_query($link, $sql);
 //顯示清單內容
 $sql = <<<multi
     SELECT * FROM `shopdetail`  
-    WHERE userId =$id
-    ORDER BY `shopdetail`.`detailID` DESC
+    WHERE userId =$id 
+    ORDER BY `shopdetail`.`detailID` DESC 
   multi;
 $result = mysqli_query($link, $sql);
+
+$max = $_SESSION['num'];
+if (isset($_POST["btnOK"])) {
+    $_SESSION['num'] = $_SESSION['num'] + 5;
+    $max = $_SESSION['num'];
+}
+
 ?>
 
 
@@ -33,118 +40,90 @@ $result = mysqli_query($link, $sql);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="mycss.css">
 </head>
 
 <body>
+    <header>
+        <div class="navbar navbar-dark bg-danger shadow-sm">
+            <div class="container d-flex justify-content-between">
+                <a href="index.php" class="navbar-brand d-flex align-items-center">
+                    <strong>細菌的商城</strong>
+                </a>
+                <div>
+                    <?php if ($_SESSION["login_session"] == false) { ?>
+                        <a href="add.php" class="btn btn-warning  btn-sm">註冊帳號</a>
+                        <a href="login.php" class="btn btn-info   btn-sm">登入帳號</a>
 
-    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-        <tr>
+                    <?php } else { ?>
 
-            <td align="left" bgcolor="#CCCCCC">
-                <font color="#FFFFFF">查詢訂單</font>
-
-            </td>
-
-        </tr>
-    </table>
-    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#CCCCCC">
-        <tr>
-
-            <td align="left" valign="baseline">
-
-
-                <a>Ｈello <?= $_SESSION["user"] ?> </a>
-
-                <?php if ($_SESSION["id"] == 1) { ?>
-                    <a>這是 <?= $id ?> 號客人的訂單</a>
-                <?php } ?>
-
-            </td>
-        </tr>
-    </table>
-    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-        <tr>
-            <td>訂單編號</td>
-            <td>項目名稱</td>
-            <td>價格</td>
-            <td>種類</td>
-            <td>數量</td>
-            <td>總價</td>
-            <td>日期</td>
-        </tr>
+                        <a><?= $_SESSION["user"] ?>您好</a>
+                        <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
+                        <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
+                        <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
+                        <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
+                        <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
+                    <?php } ?>
 
 
-        <tr>
 
+                </div>
+    </header>
 
-            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+    <div class="py-5 ">
 
+        <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+            <tr>
+
+                <td align="center" bgcolor="#AE0000" colspan="2" id="shopcar">
+                    <font color="#FFFFFF">查詢訂單</font>
+                </td>
+            </tr>
+            <?php if ($_SESSION["id"] == 1) { ?>
+                <tr>
+                    <td align="left" valign="baseline">
+                        <a>這是 <?= $id ?> 號客人的訂單</a>
+                    </td>
+                </tr>
+            <?php } ?>
+            <tr>
+                <td id="shopcar">訂單編號</td>
+                <td id="shopcar">日期</td>
+            </tr>
+            <tr>
                 <?php
+                $i = 0;
+                while ($row = mysqli_fetch_assoc($result)) { ?>
+                    <?php
 
-
-                if ($detailID != $row["detailID"]) { ?>
-        </tr>
-
-
-        <td> <?php if ($detail_total_price != "") {
-                        echo "小計:" . $detail_total_price;
-                    } ?></td>
-
-
+                    if ($i < $max) {
+                        if ($detailID != $row["detailID"]) { ?>
+            </tr>
+            <tr>
+                <td id="shopcar">
+                    <a href="detial.php?id=<?= $row["detailID"] ?>" class="btn btn-info"> <?= $row["detailID"] ?></a>
+                    <?php $detailID = $row["detailID"];   ?></td>
+                <td id="shopcar"><?= $row["data"];
+                                    $i++;  ?></td>
+        <?php  }
+                    } ?>
+            </tr>
+        <?php  } ?>
         <tr>
-            <?php $detail_total_price += $row["totalprice"]; ?>
-
-            <td><?php
-
-                    echo $row["detailID"] . "     ";
-
-
-                    $detail_total_price = 0;
-
-
-                    $detailID = $row["detailID"];   ?></td>
-
-        <?php  } else { ?>
-            <td><?php } ?></td>
-            <td><?= $row["itemname"] ?></td>
-            <td><?= $row["itemprice"] ?></td>
-            <td><?= $row["species"] ?></td>
-
-            <td><?= $row["quantity"] ?></td>
-            <td><?= $row["totalprice"] ?></td>
-            <td><?= $row["data"] ?></td>
-
-
-
+            <form id="form1" name="form1" method="post">
+                <td align="center" colspan="2" id="shopcar">
+                    
+                    <input type="submit" name="btnOK" id="btnOK" value="查看更多" id="btn btn-danger" />
+                </td>
+            </form>
         </tr>
         <tr>
-        </tr>
+            <td align="center" bgcolor="#AE0000" colspan="2">              
 
-
-    <?php  } ?>
-
-
-
-
-
-    <tr>
-        <td><?php echo "小計:" . $detail_total_price; ?></td>
-
-
-
-    </tr>
-    </table>
-
-    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-        <tr>
-            <td align="left" bgcolor="#CCCCCC">
-                
-                <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
             </td>
-
         </tr>
-    </table>
-
+        </table>
+    </div>
 
 </body>
 

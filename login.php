@@ -120,17 +120,15 @@ if (isset($_POST["btnOK"])) {
   <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
     <form id="form1" name="form1" method="post">
-      <tr bgcolor="#AE0000">
+    <tr bgcolor="#AE0000">
         <td>
-          <div>
+          <div id="title">
             <div></div>
             <font color="#FFFFFF" align="center">登入</font>
             <div>
-
             </div>
           </div>
         </td>
-
       </tr>
       <tr>
         <td align="center">

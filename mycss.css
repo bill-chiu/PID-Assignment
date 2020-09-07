@@ -1,6 +1,7 @@
 
 #table{
     width:400px;
+ 
 }
 input[type="text"]{padding:5px 15px; 
     border:2px #E0E0E0 solid;
@@ -10,7 +11,7 @@ input[type="text"]{padding:5px 15px;
     border-radius: 5px; }
 input[type="number"]{
     border:2px #E0E0E0 solid;
-
+    margin-top: 20px;
     width:100px;
     border-radius: 5px; }
 input[
@@ -18,10 +19,34 @@ input[
     padding:5px 15px; 
     cursor:pointer;
     background-color: #AE0000;
-
     border-radius: 5px; 
     color: #fff;
 }
+#shopcar{
+    border-bottom: 1px #ccc solid;
+    border-left:1px #ccc solid;
+    border-right:1px #ccc solid;
+
+}
+#shopcar1{
+    border-bottom: 1px #ccc solid;
+    border-left:1px #ccc solid;
+    border-right:1px #ccc solid;
+    width: 100px;
+
+}
+#shopcar2{
+    border-bottom: 1px #ccc solid;
+
+
+}
+#shopcar3{
+    border-bottom: 1px #ccc solid;
+    border-left:1px #ccc solid;
+    width: 200px;
+}
+
+
 #aurl{     
     padding:5px 15px; 
     border:1px #E0E0E0 solid;

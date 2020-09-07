@@ -4,6 +4,11 @@
 
 
 session_start();
+
+if($_SESSION['num']>5){
+  $_SESSION['num']=5;
+}
+
 //如果是遊客
 if ($_SESSION["user"] == "Guest") {
   header("location:admin.php");

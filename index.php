@@ -9,6 +9,9 @@ $id = $_SESSION['id'];
 if ($_SESSION['id'] == 1) {
   header("location:admin.php");
 }
+if($_SESSION['num']>5){
+  $_SESSION['num']=5;
+}
 
 global $remaining;
 
