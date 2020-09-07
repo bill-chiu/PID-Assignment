@@ -13,6 +13,17 @@
 </head>
 
 <body>
+<header>
+    <div class="navbar navbar-dark bg-danger shadow-sm">
+      <div class="container d-flex justify-content-between">
+        <a href="index.php" class="navbar-brand d-flex align-items-center">
+          <strong>細菌的商城</strong>
+        </a>
+
+ 
+    </div>
+  </header>
+  <div class="py-5 ">
 <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="add_account.php">
   <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
@@ -50,11 +61,11 @@
       <tr>
         <td colspan="2" align="center">
 
-          <hr>
-          <!-- <div id="aaa"> -->
+          <hr >
+          <!-- <div id="aurl"> -->
           <input type="submit" name="btnOK" id="btnOK" value="註冊" />
           </form>
-          <a id="aaa"href="login.php " >回首頁</a>
+          <a id="aurl"href="login.php " class="btn" >我已有帳號</a>
           <!-- </div> -->
         </td>
       </tr>
@@ -72,7 +83,7 @@
 
     </div>
   </table>
-
+  </div>
 
 </body>
 

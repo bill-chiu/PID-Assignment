@@ -102,10 +102,21 @@ if (isset($_POST["btnOK"])) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="mycss.css">
+  
 </head>
 
 <body>
+<header>
+    <div class="navbar navbar-dark bg-danger shadow-sm">
+      <div class="container d-flex justify-content-between">
+        <a href="index.php" class="navbar-brand d-flex align-items-center">
+          <strong>細菌的商城</strong>
+        </a>
 
+    </div>
+    </div>
+  </header>
+  <div class="py-5 ">
   <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
     <form id="form1" name="form1" method="post">
@@ -124,17 +135,17 @@ if (isset($_POST["btnOK"])) {
       <tr>
         <td align="center">
 
-          <input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" /></td>
+          <input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" required/></td>
       </tr>
       <tr>
         <td align="center">
 
-          <input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" /></td>
+          <input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" required/></td>
       </tr>
 
       <tr>
         <td align="center">
-          <input type="text" name="Verif" id="Verif" placeholder="驗證碼" /><br><br>
+          <input type="text" name="Verif" id="Verif" placeholder="驗證碼" required /><br><br>
           <img src="<?php echo "images/" . $_SESSION['verification1 '] . '.png' ?>" />
           <img src="<?php echo "images/" . $_SESSION['verification2 '] . '.png' ?>" />
           <img src="<?php echo "images/" . $_SESSION['verification3 '] . '.png' ?>" />
@@ -144,7 +155,7 @@ if (isset($_POST["btnOK"])) {
       <tr>
         <td colspan="2" align="center">
           <hr><input type="submit" name="btnOK" id="btnOK" value="登入" />
-          <input type="submit" name="btnLogin" id="btnLogin" value="註冊" />
+          <a id="aurl" href="add.php " class="btn">註冊</a>
         </td>
       </tr>
       <tr bgcolor="#AE0000">
@@ -161,7 +172,8 @@ if (isset($_POST["btnOK"])) {
     </div>
   </table>
 
-
+  </div>
+       
 </body>
 
 </html>

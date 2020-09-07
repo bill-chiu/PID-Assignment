@@ -47,7 +47,7 @@ if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] > 0) {
       where shoplists .userId=$id and shoplists .itemID=$itemid
 multi;
       $result = mysqli_query($link, $sql);
-        header("Location:index.php");
+      header("Location:index.php");
       // header("Location:shop_car.php?id=$id");
     } else {
       echo "<center><font color='red'>";
@@ -91,37 +91,76 @@ multi;
   multi;
   $result = mysqli_query($link, $sql);
 
-  echo $_SESSION['id'];
+  // echo $_SESSION['id'];
 }
 
 ?>
 
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Lag - Member Page</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="mycss.css">
+  <meta charset="utf-8">
+
+  <title>Album example · Bootstrap</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+  <link href="album.css" rel="stylesheet">
 </head>
 
 <body>
+  <header>
+    <div class="navbar navbar-dark bg-danger shadow-sm">
+      <div class="container d-flex justify-content-between">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+          <strong>細菌的商城</strong>
+        </a>
 
-  <table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+        <!-- <form action="#" method="post">
+          <a class="navbar-brand d-flex align-items-center">
+            <label>商品名稱</label>
+            <input type="text" class="field" />
+            <label>類別</label>
+            <select class="field">
+              <option value="123">選擇類別</option>
+            </select>
 
+            <label>價格</label>
+            <select class="field small-field">
+              <option value="">$10</option>
+            </select>
+            <label>to:</label>
+            <select class="field small-field">
+              <option value="">$50</option>
+            </select>
 
-    <td align="left" bgcolor="#CCCCCC">
-      <font color="#FFFFFF">商品目錄</font>
-    </td>
+            <input type="submit" class="search-submit" value="查詢" />
 
+        </form> -->
 
-    <td align="right" bgcolor="#CCCCCC">
+      <!-- </div> -->
+      <div>
       <?php if ($_SESSION["login_session"] == false) { ?>
 
 
@@ -130,88 +169,67 @@ multi;
         <a href="login.php" class="btn btn-info   btn-sm">登入帳號</a>
 
       <?php } else { ?>
-        <a>hello <?= $_SESSION["user"] ?> </a>
+
+        <a><?= $_SESSION["user"] ?>您好</a>
         <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
-        <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-primary   btn-sm">購物車</a>
+        <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
         <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
-        <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-success  btn-sm">修改帳號</a>
-        <a href="AAA.php" class="btn btn-success  btn-sm">修改帳號</a>
-      <?php } ?>
-    </td>
-    </tr>
-
-  </table>
-  <table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-
-    <tr>
-      <td colspan="" align="center" bgcolor="#F2F2F2">
-
-      </td>
-    </tr>
-    <tr>
-
-      <td align="left" valign="baseline">
-
-    </tr>
-
-    <tr>
-      <td>項目名稱</td>
-      <td></td>
-      <td>價格</td>
-      <td>種類</td>
-      <?php if ($_SESSION["login_session"] != false) { ?>
-        <td>數量</td>
+        <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
 
       <?php } ?>
-      <td>剩餘數量</td>
-    </tr>
+      </div>
+    </div>
+    </div>
+  </header>
+
+  <main role="main">
+
+    <div class="py-5 ">
+
+      <div class="container">
+
+        <div class="row">
+          <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+            <div class="col-3 pl-2 pr-2">
+              <div class="card mb-3 shadow-sm">
+                <a href="item.php?id=<?= $row["itemID"] ?> "><img src="item_image/<?= $row["itemname"] ?>.png" width="100%" height="150"></a>
+                <div class="card-body">
+                  <a id="aurl" href="item.php?id=<?= $row["itemID"] ?> "><?= $row["itemname"] ?></a>
+          
 
 
-    <tr>
-      <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                  <font color="#AE0000">
+
+                    <p><?= $row["itemprice"] . "元" ?></p>
+                  </font>
+                  <div class="d-flex justify-content-between align-items-center">
+
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
-        <form id="form1" name="form1" method="post">
-          <td><?= $row["itemname"] ?> </td>
-          <td><a class="123"><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
-
-
-          <td><?= $row["itemprice"] ?></td>
-
-
-          <td><?= $row["species"] ?></td>
-          <?php if ($_SESSION["login_session"] != false) { ?>
-
-            <td> <input type="text" name="txtQuantity" id="txtQuantity" value="0" /></td>
           <?php } ?>
-          <td><?php echo $row["remaining"]; ?> </td>
 
-          <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
-          <td>
-            <?php if ($_SESSION["login_session"] == false) { ?>
-              <a href="login.php" class="btn btn-danger btn-sm">購買</a>
-            <?php } else { ?>
+        </div>
+      </div>
+    </div>
 
-              <input type="submit" name="btnOK" id="btnOK" value="新增" />
+  </main>
 
-              <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["itemID"] ?>" />
-            <?php } ?>
-          </td>
-        </form>
-    </tr>
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Back to top</a>
+      </p>
 
-  <?php  } ?>
-
-
-  </table>
-
-
-
-  <table width="600" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-    <td align="left" bgcolor="#CCCCCC">
-      <font color="#CCCCCC">11</font>
-    </td>
-  </table>
-</body>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script>
+    window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')
+  </script>
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
 </html>

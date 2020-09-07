@@ -1,36 +1,37 @@
-body {
-        margin-top: 100px;
-    
-    text-align:center;
-    
-  }
+
 #table{
     width:400px;
 }
-input[type="text"]{padding:5px 15px; border:2px #E0E0E0 solid;
-    -webkit-border-radius: 5px;
+input[type="text"]{padding:5px 15px; 
+    border:2px #E0E0E0 solid;
+
     text-align:center;
     width:300px;
     border-radius: 5px; }
-input[type="submit"]{padding:5px 15px; 
+input[type="number"]{
+    border:2px #E0E0E0 solid;
+
+    width:100px;
+    border-radius: 5px; }
+input[
+    type="submit"]{
+    padding:5px 15px; 
     cursor:pointer;
     background-color: #AE0000;
-    -webkit-border-radius: 5px;
+
     border-radius: 5px; 
     color: #fff;
 }
-#aaa{     padding:5px 15px; 
+#aurl{     
+    padding:5px 15px; 
+    border:1px #E0E0E0 solid;
     cursor:pointer;
     background-color: #AE0000;
-    -webkit-border-radius: 5px;
+
     border-radius: 5px; 
     color: #fff;
-
-
-
+    margin-bottom: 2.5px;
 }
-
-
 input[type="file"]{
     width:200px;
 }
@@ -40,17 +41,15 @@ select{
 input[type="reset"]{padding:5px 15px; 
     cursor:pointer;
     width:200px;
-    -webkit-border-radius: 5px;
+  
     border-radius: 5px; 
 }
 input[type="password"]{padding:5px 15px; border:2px #E0E0E0 solid;
-
-    -webkit-border-radius: 5px;
+ 
     text-align:center;
     width:300px;
     border-radius: 5px; }
 #greenline{
-    
     border-bottom:0.5px #AE0000 solid;
 }
 #moneybtn{

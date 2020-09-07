@@ -49,9 +49,7 @@ multi;
 
 if ($relode == true) {
 
-    echo "<center><font color='red'>";
-    echo "物品數量有異動! 已將您的數量調整為庫存數量<br/>";
-    echo "</font>";
+    echo "<script>alert('購買數量大於可販售數量,系統將自行幫您修改至可販售數量')</script>";
     header("Refresh:2;shop_car.php?id=$id");
 } else {
 

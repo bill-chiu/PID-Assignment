@@ -22,7 +22,6 @@ if (isset($_POST["btnOK"])) {
   if ($_POST["txtQuantity"] <= 0) {
 
     header("Location: delete_list.php?id=$listid");
-
   } else {
 
 
@@ -46,7 +45,7 @@ multi;
   }
   //顯示購物車內容
   $sql = <<<multi
-  select username,c.userId,itemname,itemprice,species,quantity,od.remaining,shoplistID,itemprice*quantity as totalprice
+  select username,c.userId,itemname,itemprice,species,od.itemID,quantity,od.remaining,shoplistID,itemprice*quantity as totalprice
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
@@ -60,7 +59,7 @@ multi;
 
   //顯示購物車內容
   $sql = <<<multi
-  select username,c.userId,itemname,itemprice,species,quantity,od.remaining,shoplistID,itemprice*quantity as totalprice
+  select username,c.userId,itemname,itemprice,species,od.itemID,quantity,od.remaining,shoplistID,itemprice*quantity as totalprice
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
@@ -142,17 +141,30 @@ multi;
         <td><?= $row["itemname"] ?></td>
         <td><?= $row["itemprice"] ?></td>
         <td><?= $row["species"] ?></td>
-        <?php if ($_SESSION['id'] != 1) { ?>
 
-          <td valign="baseline" width="0">
+        <td valign="baseline" width="0">
+          <form id="form1" name="form1" method="post">
+            <?php
+            if ($row["quantity"] > $row["remaining"]) {
+              $row["quantity"] = $row["remaining"];
+              $quantity = $row['quantity'];
+              $remaining = $row['remaining'];
+              $itemID = $row['itemID'];
+              $sql = <<<multi
+                update shoplists set 
+                quantity='$remaining'
+                where userId=$id and itemID=$itemID
+            multi;
+              mysqli_query($link, $sql);
 
-            <form id="form1" name="form1" method="post">
-              <input type="text" name="txtQuantity" id="txtQuantity" value="<?php echo $row["quantity"]; ?>" />
+              echo "<script>alert('購買數量大於可販售數量,系統將自行幫您修改至可販售數量')</script>";
+            }
 
-          </td>
-        <?php } else { ?>
-          <td><?= $row["quantity"] ?></td>
-        <?php } ?>
+
+            ?>
+            <input type="text" name="txtQuantity" id="txtQuantity" value="<?php echo $row["quantity"]; ?>" />
+        </td>
+
         <td><?= $row["remaining"] ?></td>
         <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
         <td><?php echo $row["totalprice"];
