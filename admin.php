@@ -2,6 +2,11 @@
 
 session_start();
 require("connDB.php");
+
+if(!isset($_SESSION['num'])){
+  $_SESSION['num'] = 1;
+}
+
 if (($_SESSION['num'] > 5)) {
   $_SESSION['num'] = 1;
 }

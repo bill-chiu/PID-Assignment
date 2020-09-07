@@ -104,12 +104,7 @@ multi;
   <?php }  ?>
 
 
-
-
-
-
-
-  <tr>
+  <tr bgcolor="#CCCCCC">
   <td><input type="submit" name="btnDown" id="btnDown" value="上一頁" /></td>
     <td><input type="submit" name="btnUP" id="btnUP" value="下一頁" /></td>
     <td align="left" bgcolor="#CCCCCC"><a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>

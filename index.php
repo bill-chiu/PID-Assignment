@@ -162,11 +162,8 @@ multi;
       <!-- </div> -->
       <div>
       <?php if ($_SESSION["login_session"] == false) { ?>
-
-
-
-        <a href="add.php" class="btn btn-warning  btn-sm">註冊帳號</a>
-        <a href="login.php" class="btn btn-info   btn-sm">登入帳號</a>
+        <a href="add.php" class="btn btn-danger  btn-sm">註冊帳號</a>
+        <a href="login.php" class="btn btn-danger   btn-sm">登入帳號</a>
 
       <?php } else { ?>
 
@@ -175,8 +172,9 @@ multi;
         <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
         <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
         <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
-
+        <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
       <?php } ?>
+
       </div>
     </div>
     </div>

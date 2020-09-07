@@ -30,7 +30,7 @@ if (!is_numeric($id)) {
 require("connDB.php");
 
 //如果都有輸入 把輸入的值post給變數
-if (isset($_POST["btnOK"]) && $_POST["txtUserPhone"] != ""&& $_POST["txtPassword"] != "") {
+if (isset($_POST["btnOK"]) && $_POST["txtUserPhone"] != "" && $_POST["txtPassword"] != "") {
   $username = $_POST["txtUserName"];
   $userphone = $_POST["txtUserPhone"];
   $account = $_POST["txtUserAccount"];
@@ -87,61 +87,83 @@ multi;
 </head>
 
 <body>
+  <header>
+    <div class="navbar navbar-dark bg-danger shadow-sm">
+      <div class="container d-flex justify-content-between">
+        <a href="index.php" class="navbar-brand d-flex align-items-center">
+          <strong>細菌的商城</strong>
+        </a>
+        <div>
+          <?php if ($_SESSION["login_session"] == false) { ?>
+            <a href="add.php" class="btn btn-danger  btn-sm">註冊帳號</a>
+            <a href="login.php" class="btn btn-danger   btn-sm">登入帳號</a>
 
-  <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+          <?php } else { ?>
 
-    <form id="form1" name="form1" method="post">
-      <tr bgcolor="#AE0000">
-        <td>
-          <div id="title">
-            <div></div>
-            <font color="#FFFFFF" align="center">修改帳號</font>
-            <div>
-              <a href="index.php?id=<?= $row["userId"] ?>" id="back" class="btn btn-info btn-danger btn-sm">返回</a>
+            <a><?= $_SESSION["user"] ?>您好</a>
+            <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
+            <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
+            <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
+            <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
+          <?php } ?>
+          <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
+        </div>
+
+      </div>
+  </header>
+  <div class="py-5 ">
+    <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+
+      <form id="form1" name="form1" method="post">
+        <tr bgcolor="#AE0000">
+          <td>
+            <div id="title">
+              <div></div>
+              <font color="#FFFFFF" align="center">修改帳號</font>
+   
             </div>
-          </div>
-        </td>
+          </td>
 
+        </tr>
+        <tr>
+          <td align="center">使用者名稱<br>
+
+            <input type="text" name="txtUserName" id="txtUserName" value="<?= $row["username"] ?>"></td>
+        </tr>
+
+        <tr>
+          <td align="center">使用者電話<br>
+
+            <input type="text" name="txtUserPhone" id="txtUserPhone" value="<?= $row["userphone"] ?>" /></td>
+        </tr>
+
+        <tr>
+          <td align="center">使用者密碼<br>
+
+            <input type="password" name="txtPassword" id="txtPassword" value="<?= $row["password"] ?>" /></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <hr><input type="submit" name="btnOK" id="btnOK" value="修改" />
+
+            <input type="submit" name="btnDelete" id="btnDelete" value="刪除帳號" />
+          </td>
+        </tr>
+        <tr bgcolor="#AE0000">
+          <td>
+            <div>
+              <font color="#AE0000">123</font>
+            </div>
+          </td>
+
+
+      </form>
       </tr>
-      <tr>
-        <td>使用者名稱<br>
 
-          <input type="text" name="txtUserName" id="txtUserName" value="<?= $row["username"] ?>"></td>
-      </tr>
-
-      <tr>
-        <td>使用者電話<br>
-
-          <input type="text" name="txtUserPhone" id="txtUserPhone" value="<?= $row["userphone"] ?>" /></td>
-      </tr>
-
-      <tr>
-        <td>使用者密碼<br>
-
-          <input type="password" name="txtPassword" id="txtPassword" value="<?= $row["password"] ?>" /></td>
-      </tr>
-      <tr>
-        <td>
-          <hr><input type="submit" name="btnOK" id="btnOK" value="修改" />
-
-          <input type="submit" name="btnDelete" id="btnDelete" value="刪除帳號" />
-        </td>
-      </tr>
-      <tr bgcolor="#AE0000">
-        <td>
-          <div>
-            <font color="#AE0000">123</font>
-          </div>
-        </td>
-
-
-    </form>
-    </tr>
-
-    </div>
+  </div>
   </table>
 
-
+  </div>
 </body>
 
 </html>

@@ -54,6 +54,7 @@ if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] > 0) {
       quantity='$quantity'
       where shoplists .userId=$id and shoplists .itemID=$itemid
 multi;
+echo "<script>alert('新增商品成功')</script>";
       $result = mysqli_query($link, $sql);
        //刷新頁面
       $sql ="select * from itemlists where itemID =$itemid";
@@ -66,11 +67,10 @@ multi;
   INSERT INTO shoplists (itemID, quantity,userId) VALUES
   ('$itemid', '$quantity','$id')
 multi;
+echo "<script>alert('新增商品成功')</script>";
       $result = mysqli_query($link, $sql);
       $sql ="select * from itemlists where itemID =$itemid";
       $result = mysqli_query($link, $sql);
-
-      exit();
     }
   } else {
 
@@ -136,8 +136,8 @@ multi;
 
 
 
-            <a href="add.php" class="btn btn-warning  btn-sm">註冊帳號</a>
-            <a href="login.php" class="btn btn-info   btn-sm">登入帳號</a>
+            <a href="add.php" class="btn btn-danger  btn-sm">註冊帳號</a>
+            <a href="login.php" class="btn btn-danger   btn-sm">登入帳號</a>
 
           <?php } else { ?>
 
@@ -146,8 +146,10 @@ multi;
             <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
             <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
             <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
+            <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
 
           <?php } ?>
+    
         </div>
       </div>
     </div>
@@ -190,7 +192,7 @@ multi;
                 <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
 
                 <?php if ($_SESSION["login_session"] == false) { ?>
-                  <a href="login.php" class="btn btn-danger btn-sm">購買</a>
+                  <a id="aurl" href="login.php">購買</a>
                 <?php } else { ?></p>
 
                 <input type="submit" name="btnOK" id="btnOK" value="加入購物車" />

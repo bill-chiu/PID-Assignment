@@ -63,7 +63,7 @@
           <hr>
           <input type="submit" name="btnOK" id="btnOK" value="新增" />
   </form>
-  <input type="submit" name="btnHome" id="btnHome" value="回首頁" />
+  <a id="aurl"href="index.php " class="btn" >回首頁</a>
   </td>
   </tr>
   <tr bgcolor="#AE0000">

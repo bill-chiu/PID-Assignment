@@ -18,7 +18,7 @@ if (isset($_POST["btnOK"])) {
   $remaining = $_POST["btnremaining"];
 
   //如果修改數量=0
-  echo $listid;
+  // echo $listid;
   if ($_POST["txtQuantity"] <= 0) {
 
     header("Location: delete_list.php?id=$listid");
@@ -38,9 +38,7 @@ multi;
       $result = mysqli_query($link, $sql);
     } else {
 
-      echo "<center><font color='red'>";
-      echo "剩餘數量不足!<br/>";
-      echo "</font>";
+      echo "<script>alert('剩餘數量不足')</script>";
     }
   }
   //顯示購物車內容
@@ -84,124 +82,156 @@ multi;
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
+  <header>
+    <div class="navbar navbar-dark bg-danger shadow-sm">
+      <div class="container d-flex justify-content-between">
+        <a href="index.php" class="navbar-brand d-flex align-items-center">
+          <strong>細菌的商城</strong>
+        </a>
+        <div>
+          <?php if ($_SESSION["login_session"] == false) { ?>
+            <a href="add.php" class="btn btn-warning  btn-sm">註冊帳號</a>
+            <a href="login.php" class="btn btn-info   btn-sm">登入帳號</a>
 
-  <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-    <tr>
+          <?php } else { ?>
 
-      <td align="left" bgcolor="#CCCCCC">
-        <font color="#FFFFFF">會員系統 － 管理員專用</font>
-        <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-primary  btn-sm">查看訂單</a>
-      </td>
+            <a><?= $_SESSION["user"] ?>您好</a>
+            <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
+            <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
+            <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
+            <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
+            <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
+          <?php } ?>
 
-    </tr>
-  </table>
-  <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-    <tr>
 
-      <td align="left" valign="baseline">
 
-        <?php if ($_SESSION["login_session"] == false) { ?>
+        </div>
+  </header>
+  <div class="py-5 ">
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+      <tr>
 
-          <a href="login.php">This page for user only.</a>
+        <td align="left" bgcolor="#CCCCCC">
+          <font color="#FFFFFF">購物車</font>
 
-        <?php } else { ?>
+        </td>
 
-          <a>Ｈello <?= $_SESSION["user"] ?> </a>
+      </tr>
+    </table>
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+      <tr>
 
-          <?php if ($_SESSION["id"] == 1) { ?>
+        <td align="left" valign="baseline">
 
-            <a>這是 <?= $id ?> 號客人的訂單</a>
+      </tr>
 
+      <tr>
+        <td>項目名稱</td>
+        <td>庫存</td>
+        <td>數量</td>
+        <td>價格</td>
+        <td>小計</td>
+        <td>變更</td>
+      </tr>
+
+
+      <tr>
+
+
+        <?php while ($row = mysqli_fetch_assoc($result)) {
+          $itemID = $row['itemID'];
+          $quantity = $row['quantity'];
+          $remaining = $row['remaining'];
+          if ($row["quantity"] > $row["remaining"]) {
+            $row["quantity"] = $row["remaining"];
+            if ($row["remaining"] > 0) {
+              $sql = <<<multi
+               update shoplists set 
+               quantity='$remaining'
+               where userId=$id and itemID=$itemID
+           multi;
+              mysqli_query($link, $sql);
+              echo "<script>alert('購買數量大於可販售數量,系統將自行幫您修改至可販售數量')</script>";
+            } else {
+              $sql = "DELETE FROM shoplists where userId=$id and itemID=$itemID";
+
+              mysqli_query($link, $sql);
+              echo "<script>alert('有商品已售完,系統將自行幫您刪除')</script>";
+            }
+          }
+          if ($row["quantity"] > 0) {        ?>
+
+            <td><?= $row["itemname"] ?></td>
+
+            <td><?= $row["remaining"] ?></td>
+
+
+
+            <td valign="baseline" width="0">
+              <form id="form1" name="form1" method="post">
+
+                <input type="number" name="txtQuantity" id="txtQuantity" value="<?php echo $row["quantity"]; ?>" />
+            </td>
+
+            <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
+            <td>
+            <font color="#AE0000">  
+            <?= $row["itemprice"] ?>
+            </font>元
+          </td>
+
+
+            <td>
+              <font color="red">
+                <?php echo $row["totalprice"];
+
+                $detail_total_price += $row["totalprice"];
+                ?>
+              </font>元
+            </td>
+
+            <td>
+
+              <input type="submit" name="btnOK" id="btnOK" value="修改數量" class="btn btn-success btn-sm" />
+              <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["shoplistID"] ?>" />
+              <a href="delete_list.php?id=<?= $row["shoplistID"] ?>" class="btn btn-danger btn-sm">刪除</a>
+            </td>
 
           <?php } ?>
-        <?php } ?>
+          </form>
+      </tr>
 
-    </tr>
-
-    <tr>
-      <td>項目名稱</td>
-      <td>價格</td>
-      <td>種類</td>
-      <td>數量</td>
-      <td>剩餘數量</td>
-      <td>總價</td>
-    </tr>
+    <?php  } ?>
 
 
-    <tr>
 
 
-      <?php while ($row = mysqli_fetch_assoc($result)) {
-
-      ?>
-
-        <td><?= $row["itemname"] ?></td>
-        <td><?= $row["itemprice"] ?></td>
-        <td><?= $row["species"] ?></td>
-
-        <td valign="baseline" width="0">
-          <form id="form1" name="form1" method="post">
-            <?php
-            if ($row["quantity"] > $row["remaining"]) {
-              $row["quantity"] = $row["remaining"];
-              $quantity = $row['quantity'];
-              $remaining = $row['remaining'];
-              $itemID = $row['itemID'];
-              $sql = <<<multi
-                update shoplists set 
-                quantity='$remaining'
-                where userId=$id and itemID=$itemID
-            multi;
-              mysqli_query($link, $sql);
-
-              echo "<script>alert('購買數量大於可販售數量,系統將自行幫您修改至可販售數量')</script>";
-            }
+    </table>
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
 
-            ?>
-            <input type="text" name="txtQuantity" id="txtQuantity" value="<?php echo $row["quantity"]; ?>" />
+      <tr>
+        <td align="right" bgcolor="#CCCCCC">
+
+
+          <h5> 總價:
+            <font color="red">
+              <?= $detail_total_price ?>
+            </font>元
+            <a href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
+          </h5>
+
+
+
         </td>
 
-        <td><?= $row["remaining"] ?></td>
-        <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
-        <td><?php echo $row["totalprice"];
-
-            $detail_total_price += $row["totalprice"];
-            ?></td>
-
-        <td>
-
-          <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-success btn-sm" />
-          <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["shoplistID"] ?>" />
-          <a href="delete_list.php?id=<?= $row["shoplistID"] ?>" class="btn btn-danger btn-sm">Delete</a>
-        </td>
-
-
-        </form>
-    </tr>
-
-  <?php  } ?>
-
-
-
-
-  </table>
-  <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-
-
-    <tr>
-      <td align="right" bgcolor="#CCCCCC">
-        <?= "小計:" . $detail_total_price ?>
-        <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
-        <a href="checkout.php " class="btn btn-success  btn-sm">結帳</a>
-      </td>
-
-    </tr>
-  </table>
-
+      </tr>
+    </table>
+  </div>
 
 </body>
 

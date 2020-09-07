@@ -18,10 +18,7 @@ if (isset($_POST["btnOK"])) {
 
     // 是否有查詢到有相同帳號
     if ($total_records > 0) {
-
-      echo "<center><font color='red'>";
-      echo "此產品已被上架!<br/>";
-      echo "</font>";
+      echo "<script>alert('此產品已被上架')</script>";
       //把值新增到產品名單
     } else {
 // 上傳檔案並存入資料庫
@@ -75,9 +72,7 @@ if (isset($_POST["btnOK"])) {
     //如果有未輸入
 }
 }else{
-    echo "<center><font color='red'>";
-    echo "有欄位未輸入!<br/>";
-    echo "</font>";
+    echo "<script>alert('有欄位未輸入')</script>";
 }
 }
 // //如果按下回首頁
