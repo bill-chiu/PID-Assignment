@@ -133,17 +133,17 @@ if (isset($_POST["btnOK"])) {
       <tr>
         <td align="center">
 
-          <input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" required/></td>
+          <input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" onkeyup="value=value.replace(/[\W]/g,'') " required/></td>
       </tr>
       <tr>
         <td align="center">
 
-          <input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" required/></td>
+          <input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" onkeyup="value=value.replace(/[\W]/g,'') " required/></td>
       </tr>
 
       <tr>
         <td align="center">
-          <input type="text" name="Verif" id="Verif" placeholder="驗證碼" required /><br><br>
+          <input type="text" name="Verif" id="Verif" placeholder="驗證碼" onkeyup="value=value.replace(/[^\d]/g,'') " required /><br><br>
           <img src="<?php echo "images/" . $_SESSION['verification1 '] . '.png' ?>" />
           <img src="<?php echo "images/" . $_SESSION['verification2 '] . '.png' ?>" />
           <img src="<?php echo "images/" . $_SESSION['verification3 '] . '.png' ?>" />

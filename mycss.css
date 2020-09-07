@@ -3,6 +3,8 @@
     width:400px;
  
 }
+
+
 input[type="text"]{padding:5px 15px; 
     border:2px #E0E0E0 solid;
 
@@ -60,9 +62,7 @@ input[
 input[type="file"]{
     width:200px;
 }
-select{
-    width:200px;
-}
+
 input[type="reset"]{padding:5px 15px; 
     cursor:pointer;
     width:200px;

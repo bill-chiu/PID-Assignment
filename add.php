@@ -47,16 +47,16 @@
             大頭照: <input type="file" name="myfile" id="myfile" required/>
         </td>
       </tr>
-      <td align="center"><input type="text" name="txtIdentityID" id="txtIdentityID" placeholder="身分證字號" required /></td>
+      <td align="center"><input type="text" name="txtIdentityID" id="txtIdentityID" onkeyup="value=value.replace(/[\W]/g,'') " placeholder="身分證字號" required /></td>
       </tr>
       <tr>
-        <td align="center"><input type="text" name="txtUserPhone" id="txtUserPhone" placeholder="電話" required /></td>
+        <td align="center"><input type="text" name="txtUserPhone" id="txtUserPhone" placeholder="電話" onkeyup="value=value.replace(/[^\d]/g,'') " required /></td>
       </tr>
       <tr>
-        <td align="center"><input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" required /></td>
+        <td align="center"><input type="text" name="txtUserAccount" id="txtUserAccount" onkeyup="value=value.replace(/[\W]/g,'') " placeholder="帳號" required /></td>
       </tr>
       <tr>
-        <td align="center"><input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" required /></td>
+        <td align="center"><input type="password" name="txtPassword" id="txtPassword" onkeyup="value=value.replace(/[\W]/g,'') " placeholder="密碼" required /></td>
       </tr>
       <tr>
         <td colspan="2" align="center">

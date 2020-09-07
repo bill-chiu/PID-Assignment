@@ -1,3 +1,10 @@
+<?php
+session_start();
+require("connDB.php");
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +25,33 @@
   </style>
 </head>
 <body>
+
+<header>
+        <div class="navbar navbar-dark bg-danger shadow-sm">
+            <div class="container d-flex justify-content-between">
+                <a href="index.php" class="navbar-brand d-flex align-items-center">
+                    <strong>細菌的商城</strong>
+                </a>
+                <div>
+                    <?php if ($_SESSION["login_session"] == false) { ?>
+                        <a href="add.php" class="btn btn-warning  btn-sm">註冊帳號</a>
+                        <a href="login.php" class="btn btn-info   btn-sm">登入帳號</a>
+
+                    <?php } else { ?>
+
+                        <a><?= $_SESSION["user"] ?>您好</a>
+                        <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
+             
+                        <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
+                        <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
+            
+                    <?php } ?>
+
+
+
+                </div>
+    </header>
+    <div class="py-5 ">
   <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="do_add_item.php">
     <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
@@ -36,15 +70,15 @@
       </tr>
 
       <tr>
-        <td align="center"><input type="text" name="txtItemName" id="txtItemName" placeholder="商品名稱" /></td>
+        <td align="center"><input type="text" name="txtItemName" id="txtItemName" placeholder="商品名稱" required/></td>
       </tr>
       <tr>
         <td align="center">
-          產品照片: <input type="file" name="myfile" id="myfile" />
+          產品照片: <input type="file" name="myfile" id="myfile" required/>
         </td>
       </tr>
       <tr>
-        <td align="center"><input type="text" name="txtItemPrice" id="txtItemPrice" placeholder="商品價格" /></td>
+        <td align="center"><input type="text" name="txtItemPrice" id="txtItemPrice" placeholder="商品價格" required onkeyup="value=value.replace(/[^\d]/g,'') "/></td>
       </tr>
       <tr>
         <td>商品類別:
