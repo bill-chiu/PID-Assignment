@@ -68,17 +68,11 @@ if (isset($_POST["btnOK"])) {
         echo "<script>alert('帳號已被黑名單')</script>";
       }
       // 登入失敗
-    } else {
+    }   else {
       randowverif();
-      //如果沒有這個帳密
-      if (  $total_records > 0) {
-        echo "<script>alert('使用者名稱或密碼錯誤')</script>";
-        //如果驗證碼比對失敗
-      } else {
-
-        echo "<script>alert('驗證碼錯誤')</script>";
-      }
-
+      //如果輸入內容錯誤
+        echo "<script>alert('輸入內容錯誤')</script>";
+      
       $_SESSION["login_session"] = false;
     }
     // 關閉資料庫連接  
