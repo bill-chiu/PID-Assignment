@@ -8,7 +8,7 @@ $id = $_GET['id'];
 
 global $detail_total_price;
 global $detailID;
-$sql = "select * FROM shopdetail where userId=5";
+$sql = "select * FROM shopdetail where userId=$id";
 $result = mysqli_query($link, $sql);
 
 //顯示清單內容
@@ -112,13 +112,16 @@ if (isset($_POST["btnOK"])) {
         <tr>
             <form id="form1" name="form1" method="post">
                 <td align="center" colspan="2" id="shopcar">
-                    
+                    <?php if ($max == $i) { ?>
                     <input type="submit" name="btnOK" id="btnOK" value="查看更多" id="btn btn-danger" />
+                <?php } else { ?>
+                    <a href="index.php" class="btn btn-danger  btn-sm">回首頁</a>
+                <?php } ?>
                 </td>
             </form>
         </tr>
         <tr>
-            <td align="center" bgcolor="#AE0000" colspan="2">              
+            <td align="center" bgcolor="#AE0000" colspan="2"> 
 
             </td>
         </tr>

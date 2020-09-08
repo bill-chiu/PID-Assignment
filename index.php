@@ -3,6 +3,16 @@
 session_start();
 require("connDB.php");
 
+if (!isset($_SESSION['id'])) {
+  $_SESSION['id'] = -1;
+}
+
+if (!isset($_SESSION['login_session'])) {
+  $_SESSION['login_session'] = false;
+}
+if (!isset($_SESSION['num'])) {
+  $_SESSION['num']=5;
+}
 //$id等於登入帳號id
 $id = $_SESSION['id'];
 //如果是管理員 導向管理頁面

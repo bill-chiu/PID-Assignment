@@ -3,7 +3,7 @@
 session_start();
 require("connDB.php");
 
-$userid=$_SESSION["id"];
+$userid = $_SESSION["id"];
 $id = $_GET['id'];
 
 global $detail_total_price;
@@ -81,7 +81,7 @@ $result = mysqli_query($link, $sql);
             <tr bgcolor="#ddd">
                 <th colspan="2"> 項目名稱</th>
 
-    
+
                 <td align="center"><b>價格</b></td>
                 <td align="center"><b>數量</b></td>
                 <td align="center"><b>小計</b></td>
@@ -138,8 +138,12 @@ $result = mysqli_query($link, $sql);
         <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
             <tr>
                 <td align="left" bgcolor="#CCCCCC">
-                    
+                    <?php if ($_SESSION["id"] != 1) { ?>
                     <a href="see_checkout.php?id=<?= $userid ?>" class="btn btn-danger  btn-sm">回訂單</a>
+
+                <?php } else { ?>
+                    <a href="shop_account.php" class="btn btn-danger  btn-sm">回顧客資料</a>
+                <?php } ?>
                 </td>
 
             </tr>

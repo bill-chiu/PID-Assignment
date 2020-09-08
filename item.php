@@ -4,13 +4,7 @@ session_start();
 require("connDB.php");
 $itemid = $_GET["id"];
 
-if (!isset($_SESSION['id'])) {
-  $_SESSION['id'] = -1;
-}
 
-if (!isset($_SESSION['login_session'])) {
-  $_SESSION['login_session'] = false;
-}
 
 //$id等於登入帳號id
 $id = $_SESSION['id'];

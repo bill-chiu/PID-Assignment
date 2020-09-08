@@ -4,11 +4,11 @@ session_start();
 require("connDB.php");
 
 if(!isset($_SESSION['num'])){
-  $_SESSION['num'] = 1;
+  $_SESSION['num'] = 5;
 }
 
 if (($_SESSION['num'] > 5)) {
-  $_SESSION['num'] = 1;
+  $_SESSION['num'] = 5;
 }
 $id = $_SESSION['id'];
 //顯示會員
@@ -71,7 +71,7 @@ $row = mysqli_fetch_assoc($result);
             <tr>
  <td>
       <?php if ($_SESSION["id"] == "1") { ?>
-        
+        <a href="shop_account.php" class="btn btn-success btn-danger">顧客資料</a>
         <a href="report.php" class="btn btn-success btn-danger">報表</a>
         <a href="adminindex.php" class="btn btn-success btn-danger">商品清單</a>
         <a href="add_item.php" class="btn btn-success btn-danger">新增商品</a>
