@@ -11,7 +11,7 @@ if (!isset($_SESSION['login_session'])) {
   $_SESSION['login_session'] = false;
 }
 if (!isset($_SESSION['num'])) {
-  $_SESSION['num']=5;
+  $_SESSION['num'] = 5;
 }
 //$id等於登入帳號id
 $id = $_SESSION['id'];
@@ -19,96 +19,29 @@ $id = $_SESSION['id'];
 if ($_SESSION['id'] == 1) {
   header("location:admin.php");
 }
-if($_SESSION['num']>5){
-  $_SESSION['num']=5;
+if ($_SESSION['num'] > 5) {
+  $_SESSION['num'] = 5;
 }
 
 global $remaining;
 
 echo $remaining;
 //如果按下按鈕且不為0
-if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] > 0) {
-
-  //記錄欲購買數量
-  $itemid = $_POST["btn444"];
-  $remaining = $_POST["btnremaining"];
-  echo $itemid;
-  echo $remaining;
-  //加入到購物車
-  $quantity = $_POST["txtQuantity"];
-
-  $sql = "SELECT * FROM `shoplists` where userId=$id and itemID=$itemid";
+if (isset($_POST["btnSearch"])) {
+  $itemname = $_POST["txtItemname"];
+  $species = $_POST["txtSpecies"];
+  $sql = <<<multi
+select * from itemlists 
+WHERE `itemname` LIKE '%$itemname%' and species LIKE '%$species%'
+multi;
   $result = mysqli_query($link, $sql);
-  $total_records = mysqli_num_rows($result);
-
-
-  // 是否有查詢到購買紀錄
-  if ($total_records > 0) {
-    $row = mysqli_fetch_assoc($result);
-    //記錄原本購買數量
-    $pastquantity = $row["quantity"];
-    echo "購買前數量" . $pastquantity;
-    //加上新購買的數量
-    $quantity = $pastquantity + $quantity;
-    echo "購買後數量" . $quantity;
-    //如果大於庫存則更新購買數量
-    if ($quantity <= $remaining) {
-
-      $sql = <<<multi
-      update shoplists set 
-      quantity='$quantity'
-      where shoplists .userId=$id and shoplists .itemID=$itemid
-multi;
-      $result = mysqli_query($link, $sql);
-      header("Location:index.php");
-      // header("Location:shop_car.php?id=$id");
-    } else {
-      echo "<center><font color='red'>";
-      echo "剩餘數量不足!<br/>";
-      echo "</font>";
-
-      $sql = <<<multi
-      select * from itemlists 
-      multi;
-      $result = mysqli_query($link, $sql);
-    }
-    //如果沒有購買紀錄
-  } else {
-    if ($quantity <= $remaining) {
-      $sql = <<<multi
-  INSERT INTO shoplists (itemID, quantity,userId) VALUES
-  ('$itemid', '$quantity','$id')
-
-multi;
-
-      $result = mysqli_query($link, $sql);
-      header("Location:index.php");
-      // header("Location:shop_car.php?id=$id");
-      exit();
-    } else {
-      echo "<center><font color='red'>";
-      echo "剩餘數量不足!<br/>";
-      echo "</font>";
-
-      $sql = <<<multi
-    select * from itemlists 
-    multi;
-      $result = mysqli_query($link, $sql);
-    }
-  }
-  //返回瀏覽介面
 } else {
-
   $sql = <<<multi
   select * from itemlists 
   multi;
   $result = mysqli_query($link, $sql);
-
-  // echo $_SESSION['id'];
 }
-
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -150,53 +83,54 @@ multi;
           <strong>細菌的商城</strong>
         </a>
 
-        <!-- <form action="#" method="post">
-          <a class="navbar-brand d-flex align-items-center">
-            <label>商品名稱</label>
-            <input type="text" class="field" />
-            <label>類別</label>
-            <select class="field">
-              <option value="123">選擇類別</option>
-            </select>
+        <div>
+          <?php if ($_SESSION["login_session"] == false) { ?>
+            <a href="add.php" class="btn btn-danger  btn-sm">註冊帳號</a>
+            <a href="login.php" class="btn btn-danger   btn-sm">登入帳號</a>
 
-            <label>價格</label>
-            <select class="field small-field">
-              <option value="">$10</option>
-            </select>
-            <label>to:</label>
-            <select class="field small-field">
-              <option value="">$50</option>
-            </select>
+          <?php } else { ?>
 
-            <input type="submit" class="search-submit" value="查詢" />
+            <a><?= $_SESSION["user"] ?>您好</a>
+            <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
+            <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
+            <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
+            <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
+            <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
+          <?php } ?>
 
-        </form> -->
-
-      <!-- </div> -->
-      <div>
-      <?php if ($_SESSION["login_session"] == false) { ?>
-        <a href="add.php" class="btn btn-danger  btn-sm">註冊帳號</a>
-        <a href="login.php" class="btn btn-danger   btn-sm">登入帳號</a>
-
-      <?php } else { ?>
-
-        <a><?= $_SESSION["user"] ?>您好</a>
-        <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
-        <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
-        <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
-        <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
-        <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
-      <?php } ?>
-
+        </div>
       </div>
-    </div>
     </div>
   </header>
 
   <main role="main">
 
-    <div class="py-5 ">
 
+    <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+      <form id="form1" name="form1" method="post">
+
+        <tr>
+          <td align="center">
+            <h4>快速查詢商品</h4>
+          </td>
+          <td align="center">商品類別 </td>
+          <td align="center">
+            <select id="txtSpecies" name="txtSpecies" class="custom-select">
+              <option value="">全部</option>
+              <option value="eat">eat</option>
+              <option value="bookduck">book</option>
+              <option value="toy">toy</option>
+              <option value="wear">wear</option>
+            </select>
+          </td>
+
+          <td align="right"><input type="text" name="txtItemname" id="txtItemname" placeholder="請輸入產品名稱" /></td>
+          <td align="left"> <input type="submit" name="btnSearch" id="btnSearch" value="查詢" class="btn btn-danger btn-sm" /></td>
+        </tr>
+      </form>
+
+    </table>
+    <div class="py-5 ">
       <div class="container">
 
         <div class="row">
@@ -206,7 +140,7 @@ multi;
                 <a href="item.php?id=<?= $row["itemID"] ?> "><img src="item_image/<?= $row["itemname"] ?>.png" width="100%" height="150"></a>
                 <div class="card-body">
                   <a id="aurl" href="item.php?id=<?= $row["itemID"] ?> "><?= $row["itemname"] ?></a>
-          
+
 
 
                   <font color="#AE0000">

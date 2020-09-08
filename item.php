@@ -4,20 +4,15 @@ session_start();
 require("connDB.php");
 $itemid = $_GET["id"];
 
-
-
 //$id等於登入帳號id
 $id = $_SESSION['id'];
 //如果是管理員 導向管理頁面
 if ($_SESSION['id'] == 1) {
   header("location:admin.php");
 }
-
 global $remaining;
-
 //如果按下按鈕且不為0
 if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] > 0) {
-
   //記錄欲購買數量
   // $itemid = $_POST["btn444"];
   $remaining = $_POST["btnremaining"];
@@ -29,20 +24,15 @@ if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] > 0) {
   $sql = "SELECT * FROM `shoplists` where userId=$id and itemID=$itemid";
   $result = mysqli_query($link, $sql);
   $total_records = mysqli_num_rows($result);
-
   //如果大於庫存則更新購買數量
   if ($quantity <= $remaining) {
-
     // 是否有查詢到購買紀錄
     if ($total_records > 0) {
       $row = mysqli_fetch_assoc($result);
       //記錄原本購買數量
       $pastquantity = $row["quantity"];
-
       //加上新購買的數量
       $quantity = $pastquantity + $quantity;
-   
-
       $sql = <<<multi
       update shoplists set 
       quantity='$quantity'
@@ -181,7 +171,7 @@ echo "<script>alert('新增商品成功')</script>";
               <p>數量尚餘: <?php echo $row["remaining"]; ?></p>
               <?php if ($_SESSION["login_session"] != false) { ?>
 
-                <p> <input type="number" name="txtQuantity" id="txtQuantity" value="1" width="100" />
+                <p> <input class="col-6" type="number" name="txtQuantity" id="txtQuantity" value="1" width="100" />
                 <?php } ?>
                 <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
 

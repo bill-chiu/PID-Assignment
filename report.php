@@ -15,9 +15,6 @@ global $detailID;
 $sql = "select * FROM shopdetail where userId=5";
 $result = mysqli_query($link, $sql);
 
-
-
-
 //如果有抓取到日期
 if (isset($_POST['get_date']) && isset($_POST['get_date1']) && isset($_POST['btnOK']) || isset($_POST['btnDay'])) {
 
@@ -141,7 +138,7 @@ multi;
                 <tr>
                     <td valign="baseline">產品名稱<input type="text" name="txtItemname" id="txtItemname" />
                         <input type="submit" name="btnOK" id="btnOK" value="查詢" class="btn btn-success btn-sm" /></td>
-                </tr>
+                </tr>   
 
         </table>
         <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#CCCCCC">
