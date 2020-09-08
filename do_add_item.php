@@ -16,10 +16,11 @@ if (isset($_POST["btnOK"])) {
     $result = mysqli_query($link, $sql);
     $total_records = mysqli_num_rows($result);
 
-    // 是否有查詢到有相同帳號
+    // 是否有查詢到有相同物品
     if ($total_records > 0) {
       echo "<script>alert('此產品已被上架')</script>";
       //把值新增到產品名單
+      header("Refresh:0.1;add_item.php");
     } else {
 // 上傳檔案並存入資料庫
 
