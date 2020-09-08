@@ -1,15 +1,11 @@
+<?php
+ $hash='$2y$10$PWOeDZ6o075R.K10CqYAyu2fmtLKdkUiGRrSDroDNlUzx8QcbHcx2';
+echo  $hash;
 
-  // while ($row = mysqli_fetch_assoc($result)) {
+if (password_verify('257', $hash)) {
+  echo 'Password is valid!';
+} else {
+  echo 'Invalid password.';
+}
 
-//   if ($row["quantity"] > $row["remaining"]) {
-//     $relode = true;
-//     $remainingtxt=$row["remaining"];
-//     $itemID=$row["itemID"];
-//     $sql = <<<multi
-//     update shoplists set 
-//     quantity='$remainingtxt'
-//     where userId=$id and itemID=$itemID
-//     multi;
-//     mysqli_query($link, $sql);
-//   }
-// }
+?>

@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_POST["btnOK"])) {
   //如果都有輸入 把輸入的值post給變數
   if ($_POST["txtUserName"] != "" && $_POST["txtUserPhone"] != "" && $_POST["txtIdentityID"] != "" && $_POST["txtUserAccount"] != "" && $_POST["txtPassword"] != "") {
@@ -8,6 +7,9 @@ if (isset($_POST["btnOK"])) {
     $identityID = $_POST["txtIdentityID"];
     $account = $_POST["txtUserAccount"];
     $password = $_POST["txtPassword"];
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
     $black = 0;
 
     $sql = "SELECT * FROM shopuser WHERE `account`='$account'";
@@ -68,7 +70,7 @@ if (isset($_POST["btnOK"])) {
 
     $sql = <<<multi
     insert into shopuser (username,userphone,identityID,account,password,black)
-    values ('$username','$userphone','$identityID','$account','$password',$black)
+    values ('$username','$userphone','$identityID','$account','$hash',$black)
     multi;
   
       require("connDB.php");

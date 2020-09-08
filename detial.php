@@ -102,7 +102,7 @@ $result = mysqli_query($link, $sql);
                     <td align="center" id="shopcar1"><?= $row["itemprice"] ?></td>
 
                     <td align="center" id="shopcar1"><?= $row["quantity"] ?></td>
-                    <td align="center" id="shopcar1">
+                    <td align="right" id="shopcar1">
                         <font color="red">
                             <?php echo $row["totalprice"];
 

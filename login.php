@@ -40,16 +40,17 @@ if (isset($_POST["btnOK"])) {
     // 建立MySQL的資料庫連接 
     require("connDB.php");
     // 建立SQL指令字串
-    $sql = "SELECT * FROM shopuser WHERE `password`='$password' AND `account`='$account'";
+    $sql = "SELECT * FROM shopuser WHERE `account`='$account'";
 
     // 執行SQL查詢
     $result = mysqli_query($link, $sql);
     $total_records = mysqli_num_rows($result);
+    $row = mysqli_fetch_assoc($result);
 
+ $hash=$row["password"];
 
     // 是否有查詢到使用者記錄以及驗證碼是否正確
-    if ($total_records > 0 && $_SESSION['verification '] == $verif) {
-      $row = mysqli_fetch_assoc($result);
+    if ($total_records > 0 && $_SESSION['verification '] == $verif && password_verify($password, $hash)) {
       if ($row["black"] != 1) {
 
         // && $_SESSION['verification '] == $verif
@@ -70,7 +71,7 @@ if (isset($_POST["btnOK"])) {
     } else {
       randowverif();
       //如果沒有這個帳密
-      if (!$total_records > 0) {
+      if (  $total_records > 0) {
         echo "<script>alert('使用者名稱或密碼錯誤')</script>";
         //如果驗證碼比對失敗
       } else {
@@ -86,7 +87,6 @@ if (isset($_POST["btnOK"])) {
   } else {
     randowverif();
     echo "<script>alert('使用者名稱或密碼未輸入')</script>";
-
   }
 }
 ?>
@@ -102,76 +102,76 @@ if (isset($_POST["btnOK"])) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="mycss.css">
-  
+
 </head>
 
 <body>
-<header>
+  <header>
     <div class="navbar navbar-dark bg-danger shadow-sm">
       <div class="container d-flex justify-content-between">
         <a href="index.php" class="navbar-brand d-flex align-items-center">
           <strong>細菌的商城</strong>
         </a>
 
-    </div>
+      </div>
     </div>
   </header>
   <div class="py-5 ">
-  <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+    <table width="400" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
 
-    <form id="form1" name="form1" method="post">
-    <tr bgcolor="#AE0000">
-        <td>
-          <div id="title">
-            <div></div>
-            <font color="#FFFFFF" align="center">登入</font>
-            <div>
+      <form id="form1" name="form1" method="post">
+        <tr bgcolor="#AE0000">
+          <td>
+            <div id="title">
+              <div></div>
+              <font color="#FFFFFF" align="center">登入</font>
+              <div>
+              </div>
             </div>
-          </div>
-        </td>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+
+            <input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" onkeyup="value=value.replace(/[\W]/g,'') " required /></td>
+        </tr>
+        <tr>
+          <td align="center">
+
+            <input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" onkeyup="value=value.replace(/[\W]/g,'') " required /></td>
+        </tr>
+
+        <tr>
+          <td align="center">
+            <input type="text" name="Verif" id="Verif" placeholder="驗證碼" onkeyup="value=value.replace(/[^\d]/g,'') " required /><br><br>
+            <img src="<?php echo "images/" . $_SESSION['verification1 '] . '.png' ?>" />
+            <img src="<?php echo "images/" . $_SESSION['verification2 '] . '.png' ?>" />
+            <img src="<?php echo "images/" . $_SESSION['verification3 '] . '.png' ?>" />
+            <img src="<?php echo "images/" . $_SESSION['verification4 '] . '.png' ?>" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <hr><input type="submit" name="btnOK" id="btnOK" value="登入" />
+            <a id="aurl" href="add.php " class="btn">註冊</a>
+          </td>
+        </tr>
+        <tr bgcolor="#AE0000">
+          <td>
+            <div>
+              <font color="#AE0000">0</font>
+            </div>
+          </td>
+
+
+      </form>
       </tr>
-      <tr>
-        <td align="center">
 
-          <input type="text" name="txtUserAccount" id="txtUserAccount" placeholder="帳號" onkeyup="value=value.replace(/[\W]/g,'') " required/></td>
-      </tr>
-      <tr>
-        <td align="center">
-
-          <input type="password" name="txtPassword" id="txtPassword" placeholder="密碼" onkeyup="value=value.replace(/[\W]/g,'') " required/></td>
-      </tr>
-
-      <tr>
-        <td align="center">
-          <input type="text" name="Verif" id="Verif" placeholder="驗證碼" onkeyup="value=value.replace(/[^\d]/g,'') " required /><br><br>
-          <img src="<?php echo "images/" . $_SESSION['verification1 '] . '.png' ?>" />
-          <img src="<?php echo "images/" . $_SESSION['verification2 '] . '.png' ?>" />
-          <img src="<?php echo "images/" . $_SESSION['verification3 '] . '.png' ?>" />
-          <img src="<?php echo "images/" . $_SESSION['verification4 '] . '.png' ?>" />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2" align="center">
-          <hr><input type="submit" name="btnOK" id="btnOK" value="登入" />
-          <a id="aurl" href="add.php " class="btn">註冊</a>
-        </td>
-      </tr>
-      <tr bgcolor="#AE0000">
-        <td>
-          <div>
-            <font color="#AE0000">0</font>
-          </div>
-        </td>
-
-
-    </form>
-    </tr>
-
-    </div>
+  </div>
   </table>
 
   </div>
-       
+
 </body>
 
 </html>

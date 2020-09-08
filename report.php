@@ -117,7 +117,7 @@ multi;
             <tr>
                 <td align="left" valign="baseline">
 
-                    <a>Ｈello <?= $_SESSION["user"] ?> </a>
+              
 
                 </td>
             </tr>

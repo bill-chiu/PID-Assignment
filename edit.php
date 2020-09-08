@@ -5,8 +5,8 @@
 
 session_start();
 
-if($_SESSION['num']>5){
-  $_SESSION['num']=5;
+if ($_SESSION['num'] > 5) {
+  $_SESSION['num'] = 5;
 }
 
 //如果是遊客
@@ -37,34 +37,42 @@ require("connDB.php");
 //如果都有輸入 把輸入的值post給變數
 if (isset($_POST["btnOK"]) && $_POST["txtUserPhone"] != "" && $_POST["txtPassword"] != "") {
   $username = $_POST["txtUserName"];
-  $userphone = $_POST["txtUserPhone"];
-  $account = $_POST["txtUserAccount"];
+  $userphone = $_POST["txtUserPhone"];  
+  $account = $_SESSION['account'];
   $password = $_POST["txtPassword"];
+  $newpassword = $_POST["txtNewPassword"];
 
+  $hash2 = password_hash($newpassword, PASSWORD_DEFAULT);
   //查詢帳號資料
   $sql = "SELECT * FROM shopuser WHERE `account`='$account'";
 
   // 執行SQL查詢
   require("connDB.php");
   $result = mysqli_query($link, $sql);
-  $total_records = mysqli_num_rows($result);
+  $row = mysqli_fetch_assoc($result);
+  $hash=$row["password"];
 
+  if (password_verify($password, $hash)) {
 
-  // 是否有查詢到有相同帳號
-
-  $sql = <<<multi
+    $sql = <<<multi
     update shopuser set 
     username='$username',
     userphone='$userphone',
-    password='$password'
+    password='$hash2'
     where shopuser .userId=$id
 multi;
-  $result = mysqli_query($link, $sql);
-  $_SESSION['user'] = $username;
+    $result = mysqli_query($link, $sql);
+    echo "<script>alert('修改成功')</script>";
+    $_SESSION['user'] = $username;
+    header("Refresh:0.1;index.php");
+    exit();
+  }else{
+    echo "<script>alert('密碼錯誤')</script>";
+    $sql = "select * from shopuser where userId =$id";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_assoc($result); 
 
-  header("location:index.php");
-  exit();
-
+  }
   //把數值放進空格裡面 方便檢視
 } else {
 
@@ -125,7 +133,7 @@ multi;
             <div id="title">
               <div></div>
               <font color="#FFFFFF" align="center">修改帳號</font>
-   
+
             </div>
           </td>
 
@@ -133,24 +141,29 @@ multi;
         <tr>
           <td align="center">使用者名稱<br>
 
-            <input type="text" name="txtUserName" id="txtUserName" value="<?= $row["username"] ?>"></td>
+            <input type="text" name="txtUserName" id="txtUserName"  required value="<?= $row["username"] ?>"></td>
         </tr>
 
         <tr>
           <td align="center">使用者電話<br>
 
-            <input type="text" name="txtUserPhone" id="txtUserPhone" value="<?= $row["userphone"] ?>" /></td>
+            <input type="text" name="txtUserPhone" id="txtUserPhone" required value="<?= $row["userphone"] ?>" /></td>
         </tr>
 
         <tr>
-          <td align="center">使用者密碼<br>
+          <td align="center">原始密碼<br>
 
-            <input type="password" name="txtPassword" id="txtPassword" value="<?= $row["password"] ?>" /></td>
+            <input type="password" name="txtPassword" required id="txtPassword" /></td>
+        </tr>
+        <tr>
+          <td align="center">新密碼<br>
+
+            <input type="password" name="txtNewPassword" required id="txtNewPassword" /></td>
         </tr>
         <tr>
           <td align="center">
             <hr><input type="submit" name="btnOK" id="btnOK" value="修改" />
-
+            </form>
             <input type="submit" name="btnDelete" id="btnDelete" value="刪除帳號" />
           </td>
         </tr>
@@ -162,7 +175,7 @@ multi;
           </td>
 
 
-      </form>
+
       </tr>
 
   </div>

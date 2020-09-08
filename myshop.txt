@@ -8,7 +8,7 @@ CREATE TABLE shopuser (
   userphone varchar(10) NOT NULL ,
   identityID varchar(10) NOT NULL DEFAULT '',
   account varchar(12) NOT NULL DEFAULT '',
-  password varchar(12) NOT NULL DEFAULT '',
+  password varchar(60)) NOT NULL DEFAULT '',
   black int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -171,7 +171,7 @@ echo "<script>alert('新增商品成功')</script>";
               <p>數量尚餘: <?php echo $row["remaining"]; ?></p>
               <?php if ($_SESSION["login_session"] != false) { ?>
 
-                <p> <input class="col-6" type="number" name="txtQuantity" id="txtQuantity" value="1" width="100" />
+                <p> <input  type="number" name="txtQuantity" id="txtQuantity" value="1" width="100" />
                 <?php } ?>
                 <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
 
@@ -181,7 +181,7 @@ echo "<script>alert('新增商品成功')</script>";
 
                 <input type="submit" name="btnOK" id="btnOK" value="加入購物車" />
 
-                <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["itemID"] ?>" />
+       
               <?php } ?></p>
           </div>
         </div>
