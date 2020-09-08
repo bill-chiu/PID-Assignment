@@ -164,7 +164,7 @@ multi;
           <td align="center">
             <hr><input type="submit" name="btnOK" id="btnOK" value="修改" />
             </form>
-            <input type="submit" name="btnDelete" id="btnDelete" value="刪除帳號" />
+
           </td>
         </tr>
         <tr bgcolor="#AE0000">

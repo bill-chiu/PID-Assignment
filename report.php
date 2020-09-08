@@ -50,15 +50,15 @@ if (isset($_POST['get_date']) && isset($_POST['get_date1']) && isset($_POST['btn
     $sql = <<<multi
     SELECT *  FROM `shopdetail` 
     WHERE `itemname` LIKE '%$itemname%' and data BETWEEN '$date' AND '$date1' and species LIKE '%$species%'
-    ORDER BY `userId` ASC
+    ORDER BY `shopdetail`.`detailID` DESC
   multi;
     $result = mysqli_query($link, $sql);
 } else {
     //顯示清單內容
     $sql = <<<multi
-SELECT * FROM `shopdetail`  
+SELECT * FROM `shopdetail`      
 WHERE data BETWEEN '$date' AND '$date1'
-ORDER BY `shopdetail`.`detailID` ASC
+ORDER BY `shopdetail`.`detailID` DESC
 multi;
     $result = mysqli_query($link, $sql);
 }
@@ -117,7 +117,7 @@ multi;
             <tr>
                 <td align="left" valign="baseline">
 
-              
+
 
                 </td>
             </tr>
@@ -137,8 +137,8 @@ multi;
                 </tr>
                 <tr>
                     <td valign="baseline">產品名稱<input type="text" name="txtItemname" id="txtItemname" />
-                        <input type="submit" name="btnOK" id="btnOK" value="查詢" class="btn btn-success btn-sm" /></td>
-                </tr>   
+                        <input type="submit" name="btnDay" id="btnDay" value="查詢" class="btn btn-success btn-sm" /></td>
+                </tr>
 
         </table>
         <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#CCCCCC">
@@ -168,7 +168,7 @@ multi;
                 <td>數量</td>
 
                 <td>日期</td>
-                <td>總價</td>
+                <td>小計</td>
                 <!-- <td>小計</td> -->
             </tr>
             <tr>
@@ -201,10 +201,12 @@ multi;
         </table>
         <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
             <tr align="right">
-                <td><?php echo "小計:" . $detail_total_price; ?></td>
-
-
-
+                <td>
+                    <h3>總價: <font color="#AE0000">
+                            <?php echo $detail_total_price; ?>
+                        </font>元
+                    </h3>
+                </td>
             </tr>
         </table>
 
@@ -212,7 +214,7 @@ multi;
             <tr>
                 <td align="left" bgcolor="#CCCCCC">
                     
-                    <a href="index.php " class="btn btn-primary  btn-sm">回首頁</a>
+                    <a href="index.php " class="btn btn-danger  btn-sm">回首頁</a>
                 </td>
 
             </tr>
