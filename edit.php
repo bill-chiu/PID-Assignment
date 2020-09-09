@@ -115,11 +115,15 @@ multi;
 
             <a><?= $_SESSION["user"] ?>您好</a>
             <a><img src="account_image/<?= $_SESSION['account'] ?>.png" width="40" height="40"></a>
+            <?php if($_SESSION["id"] != "1") { ?> 
             <a href="shop_car.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger   btn-sm">購物車</a>
+            <?php }?>
             <a href="sign_out.php" class="btn btn-danger   btn-sm">登出帳號</a>
             <a href="edit.php?id=<?= $_SESSION['id'] ?>" class="btn btn-danger  btn-sm">修改帳號</a>
           <?php } ?>
+          <?php if($_SESSION["id"] != "1") { ?> 
           <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
+          <?php }?>
         </div>
 
       </div>
