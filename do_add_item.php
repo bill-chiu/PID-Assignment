@@ -61,8 +61,8 @@ if (isset($_POST["btnOK"])) {
     }
     //把值新增到物品清單
     $sql = <<<multi
-    INSERT INTO itemlists (itemname, itemprice,species,remaining) VALUES
-    ('$itemname', '$itemprice','$species','0')
+    INSERT INTO itemlists (itemname, itemprice,species,remaining,discount,currentprice) VALUES
+    ('$itemname', '$itemprice','$species','0','100','$itemprice')
     multi;
     echo $sql;
     require("connDB.php");

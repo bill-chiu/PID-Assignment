@@ -149,14 +149,14 @@ multi;
                     <p>
                     <?php  } else if ($row["discount"] < 100 && $row["discount"] % 10!= 0) { ?>
                       <s>原價<?= $row["itemprice"] ?>元<br></s>
-                      <p>
+                    <h6> <p>
                         <font color="red">
                           <?= $row["discount"];?>
                         </font>
                         折
                       <?php } else { ?>
                         <s>原價<?= $row["itemprice"] ?>元<br></s>
-                        <p>
+                        <h6>    <p>
                           <font color="red">
                             <?= $row["discount"] * 0.1;?>
                           </font>
@@ -165,7 +165,7 @@ multi;
                         <font color="red">
                           <?= $row["currentprice"]; ?>
                         </font>元
-                        </p>
+                        </p></h6> 
                         <div class="d-flex justify-content-between align-items-center">
 
                         </div>

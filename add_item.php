@@ -84,7 +84,7 @@ require("connDB.php");
         <td>商品類別:
           <select id="txtSpecies" name="txtSpecies" class="custom-select">
             <option value="eat">eat</option>
-            <option value="bookduck">book</option>
+            <option value="book">book</option>
             <option value="toy">toy</option>
             <option value="wear">wear</option>
           </select>
