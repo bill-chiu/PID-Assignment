@@ -147,13 +147,14 @@ multi;
                   <?php if ($row["discount"] == 100) {            ?>
                     <br>
                     <p>
-                    <?php  } else if ($row["discount"] < 100 && $row["discount"] % 10!= 0) { ?>
+                    <?php  } else if ($row["discount"] < 100 && $row["discount"] % 10!= 0 && $row["discount"] > 10) { ?>
                       <s>原價<?= $row["itemprice"] ?>元<br></s>
                     <h6> <p>
                         <font color="red">
                           <?= $row["discount"];?>
                         </font>
                         折
+                        
                       <?php } else { ?>
                         <s>原價<?= $row["itemprice"] ?>元<br></s>
                         <h6>    <p>

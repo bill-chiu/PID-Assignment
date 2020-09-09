@@ -157,12 +157,12 @@ multi;
         <tr>
           <td align="center">原始密碼<br>
 
-            <input type="password" name="txtPassword" required id="txtPassword" /></td>
+            <input type="password" name="txtPassword" required id="txtPassword" placeholder="請輸入當前的密碼"/></td>
         </tr>
         <tr>
           <td align="center">新密碼<br>
 
-            <input type="password" name="txtNewPassword" required id="txtNewPassword" /></td>
+            <input type="password" name="txtNewPassword" required id="txtNewPassword" placeholder="如不需修改密碼輸入原始密碼"/></td>
         </tr>
         <tr>
           <td align="center">
