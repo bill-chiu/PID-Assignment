@@ -4,8 +4,8 @@ session_start();
 require("connDB.php");
 $detail_total_price = 0;
 
-if($_SESSION['num']>5){
-  $_SESSION['num']=5;
+if ($_SESSION['num'] > 5) {
+  $_SESSION['num'] = 5;
 }
 
 $id = $_GET['id'];
@@ -39,7 +39,7 @@ if (isset($_POST["btnOK"])) {
     WHERE shoplists .shoplistID =$listid
 
 multi;
-echo "<script>alert('修改成功')</script>";
+      echo "<script>alert('修改成功')</script>";
       $result = mysqli_query($link, $sql);
     } else {
 
@@ -48,7 +48,7 @@ echo "<script>alert('修改成功')</script>";
   }
   //顯示購物車內容
   $sql = <<<multi
-  select username,c.userId,itemname,itemprice,species,od.itemID,quantity,od.remaining,shoplistID,itemprice*quantity as totalprice
+  select username,c.userId,itemname,itemprice,discount,currentprice,species,od.itemID,quantity,od.remaining,shoplistID,itemprice*quantity*discount*0.01 as totalprice
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
@@ -62,7 +62,7 @@ echo "<script>alert('修改成功')</script>";
 
   //顯示購物車內容
   $sql = <<<multi
-  select username,c.userId,itemname,itemprice,species,od.itemID,quantity,od.remaining,shoplistID,itemprice*quantity as totalprice
+  select username,c.userId,itemname,itemprice,discount,currentprice,species,od.itemID,quantity,od.remaining,shoplistID,currentprice*quantity as totalprice
   
   from shopuser c join shoplists o on o.userId =c.userId
                    join itemlists od on od.itemID =o.itemID
@@ -177,7 +177,7 @@ echo "<script>alert('修改成功')</script>";
             <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
             <td id="shopcar2">
               <font color="#AE0000">
-                <?= $row["itemprice"] ?>
+                <?=  $row["currentprice"]  ?>
               </font>元
             </td>
 
@@ -210,9 +210,9 @@ echo "<script>alert('修改成功')</script>";
 
     <tr align="right" bgcolor="#CCCCCC">
       <td colspan="7" color="CCCCCC">
-      <font color="#CCCCCC">
-               1
-              </font>
+        <font color="#CCCCCC">
+          1
+        </font>
       </td>
 
     </tr>
@@ -221,8 +221,8 @@ echo "<script>alert('修改成功')</script>";
       <td align="right"> 總價:</td>
       <td align="right" colspan="2">
         <h5>
-        <font color="red">
-            <?= $detail_total_price ?>
+          <font color="red">
+            <?= round($detail_total_price) ?>
           </font>元
 
         </h5>

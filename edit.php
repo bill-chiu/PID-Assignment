@@ -123,7 +123,7 @@ multi;
           <?php } ?>
           <?php if($_SESSION["id"] != "1") { ?> 
           <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
-          <?php }?>
+              <?php }?>
         </div>
 
       </div>

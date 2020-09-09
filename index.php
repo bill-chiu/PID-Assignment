@@ -139,17 +139,36 @@ multi;
               <div class="card mb-3 shadow-sm">
                 <a href="item.php?id=<?= $row["itemID"] ?> "><img src="item_image/<?= $row["itemname"] ?>.png" width="100%" height="150"></a>
                 <div class="card-body">
-                  <a id="aurl" href="item.php?id=<?= $row["itemID"] ?> "><?= $row["itemname"] ?></a>
+
+                  <a id="aurl" href="item.php?id=<?= $row["itemID"] ?> "><?= $row["itemname"] ?></a><br>
 
 
 
-                  <font color="#AE0000">
+                  <?php if ($row["discount"] == 100) {            ?>
+                    <br>
+                    <p>
+                    <?php  } else if ($row["discount"] < 100 && $row["discount"] % 10!= 0) { ?>
+                      <s>原價<?= $row["itemprice"] ?>元<br></s>
+                      <p>
+                        <font color="red">
+                          <?= $row["discount"];?>
+                        </font>
+                        折
+                      <?php } else { ?>
+                        <s>原價<?= $row["itemprice"] ?>元<br></s>
+                        <p>
+                          <font color="red">
+                            <?= $row["discount"] * 0.1;?>
+                          </font>
+                          折
+                        <?php  } ?>
+                        <font color="red">
+                          <?= $row["currentprice"]; ?>
+                        </font>元
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
 
-                    <p><?= $row["itemprice"] . "元" ?></p>
-                  </font>
-                  <div class="d-flex justify-content-between align-items-center">
-
-                  </div>
+                        </div>
                 </div>
               </div>
             </div>

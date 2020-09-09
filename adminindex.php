@@ -14,30 +14,44 @@ if (isset($_POST["btnSearch"])) {
   multi;
     $result = mysqli_query($link, $sql);
 } else {
-if (isset($_POST["btnOK"])) {
+    if (isset($_POST["btnOK"])) {
+        $discount = $_POST["txtdiscount"];
+        $remaining = $_POST["txtremaining"];
+        $itemprice = $_POST["txtprice"];
+        if($discount>100 || $discount<1){   
+            echo "<script>alert('請輸入1-100之間的數字')</script>";
+            $sql ="select * from itemlists";
+            $result = mysqli_query($link, $sql);}
+        else if($itemprice<1){
+            echo "<script>alert('請輸入大於0的數字')</script>";
+            $sql ="select * from itemlists";
+            $result = mysqli_query($link, $sql);
+        
+        }else{
 
-    $remaining = $_POST["txtremaining"];
-    $itemprice = $_POST["txtprice"];
-    //抓到物品編號
-    $itemid = $_POST["btn444"];
-    //修改物品價格
-    $sql = <<<multi
+        $currentprice = ceil($itemprice * $discount * 0.01);
+        //抓到物品編號
+        $itemid = $_POST["btn444"];
+        //修改物品價格
+        $sql = <<<multi
   UPDATE `itemlists`  SET
   `itemprice` = '$itemprice' ,
-  `remaining` = '$remaining' 
+  `remaining` = '$remaining' ,
+  `discount`= '$discount',
+  `currentprice`='$currentprice'
   WHERE `itemlists`.`itemID` = $itemid
 multi;
-    $result = mysqli_query($link, $sql);
-    $sql = "select * from itemlists";
-    $result = mysqli_query($link, $sql);
-} else {
-    //顯示物品清單
+        $result = mysqli_query($link, $sql);
+        $sql = "select * from itemlists";
+        $result = mysqli_query($link, $sql);}
+    } else {
+        //顯示物品清單
 
-    $sql = <<<multi
+        $sql = <<<multi
   select * from itemlists 
   multi;
-    $result = mysqli_query($link, $sql);
-}
+        $result = mysqli_query($link, $sql);
+    }
 }
 ?>
 
@@ -84,12 +98,14 @@ multi;
     </header>
     <div class="py-5 ">
         <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
-        <form id="form1" name="form1" method="post">
+            <form id="form1" name="form1" method="post">
 
                 <tr>
-                <td align="center" ><h4>快速查詢商品</h4> </td>
-                    <td align="center" >商品類別 </td>
-                    <td  align="center">
+                    <td align="center">
+                        <h4>快速查詢商品</h4>
+                    </td>
+                    <td align="center">商品類別 </td>
+                    <td align="center">
                         <select id="txtSpecies" name="txtSpecies" class="custom-select">
                             <option value="">全部</option>
                             <option value="eat">eat</option>
@@ -102,52 +118,53 @@ multi;
                     <td align="right"><input type="text" name="txtItemname" id="txtItemname" placeholder="請輸入產品名稱" /></td>
                     <td align="left"> <input type="submit" name="btnSearch" id="btnSearch" value="查詢" class="btn btn-danger btn-sm" /></td>
                 </tr>
-                </form>
-                <tr>
-                    <td align="left" bgcolor="#CCCCCC" colspan="6">
-                        <font color="#FFFFFF">商品清單</font>
-                    </td>
+            </form>
+            <tr>
+                <td align="left" bgcolor="#CCCCCC" colspan="6">
+                    <font color="#FFFFFF">商品清單</font>
+                </td>
 
-                </tr>
-                    </table>
-                <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2" id="shopcar">
-                <tr bgcolor="#ddd">
+            </tr>
+        </table>
+        <table width="800" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2" id="shopcar">
+            <tr bgcolor="#ddd">
 
-                    <td align="center"><b>商品名稱</b></td>
-                    <td align="center"><b>商品預覽</b></td>
-                    <td align="center"><b>種類</b></td>
-                    <td align="center"><b>價格</b></td>
-                    <td align="center"><b>庫存</b></td>
-                    <td align="center"><b>操作</b></td>
-
-
-                </tr>
+                <td align="center"><b>商品名稱</b></td>
+                <td align="center"><b>商品預覽</b></td>
+                <td align="center"><b>種類</b></td>
+                <td align="center"><b>價格</b></td>
+                <td align="center"><b>折扣</b></td>
+                <td align="center"><b>庫存</b></td>
+                <td align="center"><b>操作</b></td>
 
 
-                <tr>
-
-               
-               <tr>
-               <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+            </tr>
 
 
-                   <form id="form1" name="form1" method="post">
-                       <td align="center" id="shopcar3"><?= $row["itemname"] ?></td>
-                       <td align="center" > <a><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
-                       <td align="center" id="shopcar1"><?= $row["species"] ?></td>
-                       <td align="center" id="shopcar1"> <input type="number" name="txtprice" id="txtprice" onkeyup="value=value.replace(/[^\d]/g,'') " value="<?= $row["itemprice"] ?>" required /></td>
-             
-                       <td align="center" id="shopcar1">  <input type="number" name="txtremaining" id="txtremaining" onkeyup="value=value.replace(/[^\d]/g,'') " value="<?= $row["remaining"] ?>" required /></td>
+            <tr>
 
-                       <td align="center" id="shopcar1">
-                           <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-danger btn-sm" />
-                           <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["itemID"] ?>" />
-                           <a href="delete_item.php?id=<?= $row["itemID"] ?>" class="btn btn-danger btn-sm">Delete</a>
-                       </td>
-                   </form>
-           </tr>
 
-       <?php  } ?>
+            <tr>
+                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+
+
+                    <form id="form1" name="form1" method="post">
+                        <td align="center" id="shopcar3"><?= $row["itemname"] ?></td>
+                        <td align="center"> <a><img src="item_image/<?= $row["itemname"] ?>.png" width="100" height="100"></a></td>
+                        <td align="center" id="shopcar1"><?= $row["species"] ?></td>
+                        <td align="center" id="shopcar1"> <input type="number" name="txtprice" id="txtprice" onkeyup="value=value.replace(/[^\d]/g,'') " value="<?= $row["itemprice"] ?>" required /></td>
+                        <td align="center" id="shopcar1"> <input type="number" name="txtdiscount" id="txtdiscount" placeholder="1-100" onkeyup="value=value.replace(/[^\d]/g,'') " value="<?= $row["discount"] ?>" required /></td>
+                        <td align="center" id="shopcar1"> <input type="number" name="txtremaining" id="txtremaining" onkeyup="value=value.replace(/[^\d]/g,'') " value="<?= $row["remaining"] ?>" required /></td>
+
+                        <td align="center" id="shopcar1">
+                            <input type="submit" name="btnOK" id="btnOK" value="修改" class="btn btn-danger btn-sm" />
+                            <input type="hidden" name="btn444" id="btn444" value="<?php echo $row["itemID"] ?>" />
+                            <a href="delete_item.php?id=<?= $row["itemID"] ?>" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </form>
+            </tr>
+
+        <?php  } ?>
 
         </table>
 
@@ -166,10 +183,11 @@ multi;
 </body>
 <footer class="text-muted">
     <div class="container">
-      <p class="float-right">
-        <a href="#">Back to top</a>
-      </p>
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
 
     </div>
-  </footer>
+</footer>
+
 </html>

@@ -55,7 +55,7 @@ if ($relode == true) {
 
     //搜尋購物車清單
     $sql = <<<multi
-select username,c.userId,od.itemname,od.itemprice,od.species,quantity,od.remaining,od.itemID,itemprice*quantity as totalprice
+select username,c.userId,od.itemname,od.itemprice,currentprice,od.species,quantity,od.remaining,od.itemID,itemprice*quantity as totalprice
 
 from shopuser c join shoplists o on o.userId =c.userId
                 join itemlists od on od.itemID =o.itemID
@@ -66,7 +66,7 @@ multi;
     while ($row = mysqli_fetch_assoc($result)) {
 
         $itemname = $row['itemname'];
-        $itemprice = $row['itemprice'];
+        $itemprice = $row['currentprice'];
         $species = $row['species'];
         $quantity = $row['quantity'];
         $remaining = $row['remaining'];

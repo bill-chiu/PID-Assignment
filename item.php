@@ -38,10 +38,10 @@ if (isset($_POST["btnOK"]) && $_POST["txtQuantity"] > 0) {
       quantity='$quantity'
       where shoplists .userId=$id and shoplists .itemID=$itemid
 multi;
-echo "<script>alert('新增商品成功')</script>";
+      echo "<script>alert('新增商品成功')</script>";
       $result = mysqli_query($link, $sql);
-       //刷新頁面
-      $sql ="select * from itemlists where itemID =$itemid";
+      //刷新頁面
+      $sql = "select * from itemlists where itemID =$itemid";
       $result = mysqli_query($link, $sql);
       // 是否沒有查詢到購買紀錄
     } else {
@@ -51,22 +51,22 @@ echo "<script>alert('新增商品成功')</script>";
   INSERT INTO shoplists (itemID, quantity,userId) VALUES
   ('$itemid', '$quantity','$id')
 multi;
-echo "<script>alert('新增商品成功')</script>";
+      echo "<script>alert('新增商品成功')</script>";
       $result = mysqli_query($link, $sql);
-      $sql ="select * from itemlists where itemID =$itemid";
+      $sql = "select * from itemlists where itemID =$itemid";
       $result = mysqli_query($link, $sql);
     }
   } else {
 
     echo "<script>alert('剩餘數量不足')</script>";
 
-    $sql ="select * from itemlists where itemID =$itemid";
+    $sql = "select * from itemlists where itemID =$itemid";
     $result = mysqli_query($link, $sql);
   }
   //返回瀏覽介面
 } else {
 
-  $sql ="select * from itemlists where itemID =$itemid";
+  $sql = "select * from itemlists where itemID =$itemid";
   $result = mysqli_query($link, $sql);
 }
 
@@ -133,7 +133,7 @@ echo "<script>alert('新增商品成功')</script>";
             <a href="see_checkout.php?id=<?= $id ?>" class="btn btn-danger  btn-sm">查看訂單</a>
 
           <?php } ?>
-    
+
         </div>
       </div>
     </div>
@@ -159,9 +159,15 @@ echo "<script>alert('新增商品成功')</script>";
           </div>
           <div>
             <h2><?= $row["itemname"] ?></h2>
-            <h3>
+        <?php if($row["discount"]!=100){ ?>    
+          <h5><s>定價 <?= $row["itemprice"] ?>元</s>
+     
+              <font color="#AE0000"><?= $row["discount"] ?> </font>折
+              </h5>
+        <?php }?>
+            <h3>特價
               <font color="#AE0000">
-                <?= $row["itemprice"] ?>
+                <?= $row["currentprice"]?>
               </font>
               元
             </h3>
@@ -171,7 +177,7 @@ echo "<script>alert('新增商品成功')</script>";
               <p>數量尚餘: <?php echo $row["remaining"]; ?></p>
               <?php if ($_SESSION["login_session"] != false) { ?>
 
-                <p> <input  type="number" name="txtQuantity" id="txtQuantity" required value="1" width="100" />
+                <p> <input type="number" name="txtQuantity" id="txtQuantity" required value="1" width="100" />
                 <?php } ?>
                 <input type="hidden" name="btnremaining" id="btnremaining" value="<?php echo $row["remaining"] ?>" />
 
@@ -181,7 +187,7 @@ echo "<script>alert('新增商品成功')</script>";
 
                 <input type="submit" name="btnOK" id="btnOK" value="加入購物車" />
 
-       
+
               <?php } ?></p>
           </div>
         </div>
