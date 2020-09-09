@@ -2,26 +2,25 @@
 -- version 4.9.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Sep 08, 2020 at 07:19 AM
--- Server version: 5.7.26
--- PHP Version: 7.4.2
+-- 主機： localhost:8889
+-- 產生時間： 2020 年 09 月 09 日 04:11
+-- 伺服器版本： 5.7.26
+-- PHP 版本： 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
 
 create database myshop;
 use myshop;
 
 --
--- Database: `myshop`
+-- 資料庫： `myshop`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `itemlists`
+-- 資料表結構 `itemlists`
 --
 
 CREATE TABLE `itemlists` (
@@ -29,27 +28,29 @@ CREATE TABLE `itemlists` (
   `itemname` varchar(12) NOT NULL,
   `itemprice` int(11) NOT NULL,
   `species` set('eat','book','toy','wear') DEFAULT NULL,
-  `remaining` int(11) NOT NULL
+  `remaining` int(11) NOT NULL,
+  `discount` int(2) DEFAULT '10',
+  `currentprice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `itemlists`
+-- 傾印資料表的資料 `itemlists`
 --
 
-INSERT INTO `itemlists` (`itemID`, `itemname`, `itemprice`, `species`, `remaining`) VALUES
-(1, '羊肉爐', 600, 'eat', 0),
-(2, '羊皮大衣', 150, 'wear', 1440),
-(3, '變形金剛', 155, 'toy', 170),
-(5, 'w', 300, 'eat', 799),
-(6, '牛排', 87, 'eat', 0),
-(7, '宅t', 444, 'wear', 0),
-(8, '1213', 666, 'eat', 0),
-(9, '宅t1545', 45454, 'toy', 0);
+INSERT INTO `itemlists` (`itemID`, `itemname`, `itemprice`, `species`, `remaining`, `discount`, `currentprice`) VALUES
+(1, '羊肉爐', 600, 'eat', 0, 100, 600),
+(2, '羊皮大衣', 555, 'wear', 0, 65, 361),
+(3, '變形金剛', 155, 'toy', 145, 100, 155),
+(5, 'w', 300, 'eat', 774, 85, 255),
+(6, '牛排', 87, 'eat', 0, 80, 70),
+(7, '宅t', 444, 'wear', 0, 88, 391),
+(8, '1213', 666, 'eat', 0, 90, 600),
+(9, '宅t1545', 45454, 'toy', 0, 1, 455);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shopdetail`
+-- 資料表結構 `shopdetail`
 --
 
 CREATE TABLE `shopdetail` (
@@ -64,7 +65,7 @@ CREATE TABLE `shopdetail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `shopdetail`
+-- 傾印資料表的資料 `shopdetail`
 --
 
 INSERT INTO `shopdetail` (`detailID`, `itemname`, `itemprice`, `species`, `quantity`, `totalprice`, `userId`, `data`) VALUES
@@ -224,12 +225,16 @@ INSERT INTO `shopdetail` (`detailID`, `itemname`, `itemprice`, `species`, `quant
 (64, 'w', 300, 'eat', 1, 300, 57, '2020-09-08'),
 (65, '羊皮大衣', 150, 'wear', 10, 1500, 5, '2020-09-08'),
 (65, '羊肉爐', 600, 'eat', 6010, 3606000, 5, '2020-09-08'),
-(65, '變形金剛', 155, 'toy', 30, 4650, 5, '2020-09-08');
+(65, '變形金剛', 155, 'toy', 30, 4650, 5, '2020-09-08'),
+(66, 'w', 255, 'eat', 22, 6600, 5, '2020-09-09'),
+(66, '變形金剛', 136, 'toy', 15, 2325, 5, '2020-09-09'),
+(67, '變形金剛', 114, 'toy', 10, 1550, 5, '2020-09-09'),
+(67, 'w', 255, 'eat', 3, 900, 5, '2020-09-09');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shoplists`
+-- 資料表結構 `shoplists`
 --
 
 CREATE TABLE `shoplists` (
@@ -240,7 +245,7 @@ CREATE TABLE `shoplists` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `shoplists`
+-- 傾印資料表的資料 `shoplists`
 --
 
 INSERT INTO `shoplists` (`shoplistID`, `itemID`, `quantity`, `userId`) VALUES
@@ -257,7 +262,7 @@ INSERT INTO `shoplists` (`shoplistID`, `itemID`, `quantity`, `userId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shopuser`
+-- 資料表結構 `shopuser`
 --
 
 CREATE TABLE `shopuser` (
@@ -271,14 +276,14 @@ CREATE TABLE `shopuser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `shopuser`
+-- 傾印資料表的資料 `shopuser`
 --
 
 INSERT INTO `shopuser` (`userId`, `username`, `userphone`, `identityID`, `account`, `password`, `black`) VALUES
 (1, '管理員', '444', 'A123456789', 'admin', '$2y$10$9Ge5VrxlHirTnZcRtSMZPOOcSbj3l7vPKHxHOZw0K8cJJM5S53Ciq', 0),
 (2, '陳會安', '0984513254', 'A123456789', 'hueyan', '1234', 0),
 (3, '江小魚', '0984444452', 'B227654321', 'smallfish', '1234', 0),
-(5, '蔡依玲1', '1000', 'H123445698', 'jolin', '$2y$10$..ojYN4gSG7otsvU9qJMd.5kBvrfgrGvEZ2agBPU7mxQioweGXq.K', 0),
+(5, '蔡依玲1', '1000', 'H123445698', 'jolin', '$2y$10$YyluFtcNCbtu4oV2qtfZHelVInA5jWLZIov3X0PqRNSDEyGO1o4rm', 0),
 (6, '張會妹', '0945215635', 'Q125478963', 'chiang', '1234', 0),
 (7, '張無忌', '0984513021', 'P223654121', 'chiang1234', '1234', 0),
 (23, 'aaa', '0998512365', 'h111111111', 'aaa', 'aaa', 0),
@@ -305,7 +310,7 @@ INSERT INTO `shopuser` (`userId`, `username`, `userphone`, `identityID`, `accoun
 (44, 'tttyy', '0998512365', 'h111111111', 'tttyy', 'tttyy', 0),
 (45, '蔡依玲', '0998512365', 'h111111111', '987987', '987987', 0),
 (46, '555666', '0998512365', 'h111111111', '555666', '555666', 0),
-(47, 'mnn', '0998512365', 'mnn', 'mnn', 'mnn', 0),
+(47, 'mnn', '0998512365', 'mnn', 'mnn', 'mnn', 1),
 (48, 'ooo', '0998512365', 'h111111111', 'ooo', 'ooo', 0),
 (49, 'ppppo', '0998512365', 'h111111111', 'ppppo', 'ppppo', 0),
 (50, 'ddd', '0998512365', 'h111111111', '639', '639', 0),
@@ -322,51 +327,51 @@ INSERT INTO `shopuser` (`userId`, `username`, `userphone`, `identityID`, `accoun
 (61, 'mmm', '0998512365', 'h111111111', 'mmm', '$2y$10$xvgZ34fPDPcW1IpHthAq3eAZ9d8hVYPQayPFA607Ml6Rp0YUh/v2a', 0),
 (62, 'aaa', '0998512365', 'h111111111', '987', '$2y$10$7R/HUAIZ65F4VkwwNm4eRe9VnSiMemdluZwSA.mBZrmzErBqmol/S', 0),
 (63, 'a', '0998512365', 'h111111111', '5556', '$2y$10$SDNKC/8SFsFKv3/hOzDN1udJ8xNZusqCrPrCVcD5fr5FuchuHTn6u', 0),
-(64, 'ddd', '0998512365', 'h111111111', '963', '$2y$10$LGg38tKidEFszg7Len2p0.70i8qX7NYsEI9dR2i9pxwD5QgWoTbFK', 0),
-(65, '周傑倫', '0998512365', 'h111111111', '257', '$2y$10$PWOeDZ6o075R.K10CqYAyu2fmtLKdkUiGRrSDroDNlUzx8QcbHcx2', 0),
+(64, 'ddd', '0998512365', 'h111111111', '963', '$2y$10$LGg38tKidEFszg7Len2p0.70i8qX7NYsEI9dR2i9pxwD5QgWoTbFK', 1),
+(65, '周傑倫', '0998512365', 'h111111111', '257', '$2y$10$PWOeDZ6o075R.K10CqYAyu2fmtLKdkUiGRrSDroDNlUzx8QcbHcx2', 1),
 (66, 'aaa', '0998512365', 'h111111111', '417', '', 0),
 (67, 'ddd', '0998512365', 'h111111111', '852', '$2y$10$unPzZhal1zMNrDEwT4bxp.EDHDOCujuNdsHwVsgpPTaZQyVtwyuxe', 0);
 
 --
--- Indexes for dumped tables
+-- 已傾印資料表的索引
 --
 
 --
--- Indexes for table `itemlists`
+-- 資料表索引 `itemlists`
 --
 ALTER TABLE `itemlists`
   ADD PRIMARY KEY (`itemID`);
 
 --
--- Indexes for table `shoplists`
+-- 資料表索引 `shoplists`
 --
 ALTER TABLE `shoplists`
   ADD PRIMARY KEY (`shoplistID`);
 
 --
--- Indexes for table `shopuser`
+-- 資料表索引 `shopuser`
 --
 ALTER TABLE `shopuser`
   ADD PRIMARY KEY (`userId`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
 
 --
--- AUTO_INCREMENT for table `itemlists`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `itemlists`
 --
 ALTER TABLE `itemlists`
   MODIFY `itemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `shoplists`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `shoplists`
 --
 ALTER TABLE `shoplists`
-  MODIFY `shoplistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
+  MODIFY `shoplistID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
--- AUTO_INCREMENT for table `shopuser`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `shopuser`
 --
 ALTER TABLE `shopuser`
   MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
