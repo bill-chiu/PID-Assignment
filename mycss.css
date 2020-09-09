@@ -3,7 +3,10 @@
     width:400px;
  
 }
+#aboutitem{
+    width:400px;
 
+}
 
 input[type="text"]{padding:5px 15px; 
     border:2px #E0E0E0 solid;

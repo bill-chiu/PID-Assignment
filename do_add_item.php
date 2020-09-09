@@ -8,7 +8,7 @@ if (isset($_POST["btnOK"])) {
     $itemname=$_POST["txtItemName"];
     $itemprice=$_POST["txtItemPrice"];
     $species=$_POST["txtSpecies"];
-
+    $aboutitem=$_POST["txtItemAbout"];
     $sql = "SELECT * FROM itemlists WHERE `itemname`='$itemname'";
 
     // 執行SQL查詢
@@ -61,8 +61,8 @@ if (isset($_POST["btnOK"])) {
     }
     //把值新增到物品清單
     $sql = <<<multi
-    INSERT INTO itemlists (itemname, itemprice,species,remaining,discount,currentprice) VALUES
-    ('$itemname', '$itemprice','$species','0','100','$itemprice')
+    INSERT INTO itemlists (itemname, itemprice,species,remaining,discount,currentprice,aboutitem) VALUES
+    ('$itemname', '$itemprice','$species','0','100','$itemprice','$aboutitem')
     multi;
     echo $sql;
     require("connDB.php");

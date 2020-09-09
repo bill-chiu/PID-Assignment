@@ -159,15 +159,15 @@ multi;
           </div>
           <div>
             <h2><?= $row["itemname"] ?></h2>
-        <?php if($row["discount"]!=100){ ?>    
-          <h5><s>定價 <?= $row["itemprice"] ?>元</s>
-     
-              <font color="#AE0000"><?= $row["discount"] ?> </font>折
+            <?php if ($row["discount"] != 100) { ?>
+              <h5><s>定價 <?= $row["itemprice"] ?>元</s>
+
+                <font color="#AE0000"><?= $row["discount"] ?> </font>折
               </h5>
-        <?php }?>
+            <?php } ?>
             <h3>特價
               <font color="#AE0000">
-                <?= $row["currentprice"]?>
+                <?= $row["currentprice"] ?>
               </font>
               元
             </h3>
@@ -189,7 +189,23 @@ multi;
 
 
               <?php } ?></p>
+
           </div>
+
+        </div>
+        <hr>
+        <div class="ml-5">
+ 
+       
+          <h4>商品描述: </h4>
+          <?php
+          if ($row["aboutitem"] != '') {
+
+            echo $row["aboutitem"];
+          }
+
+
+          ?>
         </div>
       </div>
     </div>
